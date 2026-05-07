@@ -92,3 +92,7 @@ Messy code
 Bugs everywhere
 
 Good. That’s where real learning starts.
+
+
+
+This is patani kyu but i am trying to make this repo pull to my local and let ssee do it sync any changes.
