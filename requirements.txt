@@ -1,5 +1,7 @@
 attrs==26.1.0
 cffi==2.0.0
+click==8.3.3
+keyboard==0.13.5
 numpy==2.4.4
 pycparser==3.0
 tcod==21.2.0
