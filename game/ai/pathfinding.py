@@ -20,14 +20,14 @@ def pathfinding(grid, start, goal):
 
         if current == goal:
             path = []
-            p = 0
+            
             while current in way:
                 
                 path.append(current)
                 current = way[current]
 
-            path.append(start)
-            return path[::-1]
+            
+            return path
 
         for dx, dy in direction:
             neighbour = (current[0] + dx, current[1] + dy)

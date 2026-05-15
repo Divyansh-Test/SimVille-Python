@@ -1,5 +1,5 @@
 
-symbol = {2:["stone", "🟫"], 1:["wood","🌳"], 0: ["Floor","🟩"], -5:["marker","❌"],-1:["empty",""]}
+symbol = {2:["stone", "🪨"], 1:["wood","🌳"], 0: ["Floor","🧱"], -5:["marker","❌"],-1:["empty",""],801:["agent1","😁"]}
 
 def render(marker, rows, cols, layer0, layer1, layer2):
   
@@ -13,16 +13,16 @@ def render(marker, rows, cols, layer0, layer1, layer2):
         for x in cols:
 
             if (y, x) == marker:
-                row += " ❌ "
+                row += "❌"
 
             elif layer2[y][x] != -1:
-                row +=" "+ (symbol[layer2[y][x]])[1]+" "
+                row +=""+ (symbol[layer2[y][x]])[1]+""
 
             elif layer1[y][x] != -1:
-                row +=" "+ (symbol[layer1[y][x]])[1]+" "
+                row +=""+ (symbol[layer1[y][x]])[1]+""
 
             else:
-                row +=" "+ (symbol[layer0[y][x]])[1]+" "
+                row +=""+ (symbol[layer0[y][x]])[1]+""
 
         output.append(row)
 
