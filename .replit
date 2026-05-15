@@ -3,3 +3,14 @@ modules = ["python-3.11"]
 expertMode = true
 
 [nix]
+
+[workflows]
+
+[[workflows.workflow]]
+name = "run tcod"
+mode = "sequential"
+author = 40292099
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd game && python test.py"

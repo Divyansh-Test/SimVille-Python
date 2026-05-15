@@ -1,43 +1,80 @@
-import numpy as np
-import random
-from database import tiles
-ground_tiles=0
-obj_tiles=1
+from world.Map import generate_map
+from interface.render import render
+from interface.get_info import get_info
 
-def Map(size):
-  np.random.seed(100)
-  map=np.zeros((size,size,2),dtype=np.int32)
-  tile_ids=[]
-  tile_spawn_probablity=[]
-  for tile_id,detail in tiles.items():
-    
-    tile_ids.append(tile_id)
-    tile_spawn_probablity.append(detail["spawn_probablity"])
+import curses
 
-  tile_spawn_probablity=[x/sum(tile_spawn_probablity) for x in tile_spawn_probablity]
+HEIGHT = 20
+WIDTH = 20
 
-  occourance=np.random.choice(tile_ids,size=(10,10),p=tile_spawn_probablity)
-  for i in range(10):
-    for j in range(10):
-      map[i,j,obj_tiles]=occourance[i,j]
+marker = (0, 0)
 
-  
-  return map
+layer0, layer1, layer2 = generate_map(HEIGHT, WIDTH)
 
 
+def main(stdscr):
+
+    global marker
+
+    curses.curs_set(0)
+
+    while True:
+
+        stdscr.clear()
+
+        rows = render(
+            marker,
+            range(HEIGHT),
+            range(WIDTH),
+            layer0,
+            layer1,
+            layer2
+        )
+
+        # draw map
+        for i, row in enumerate(rows):
+            stdscr.addstr(i, 0, row)
+
+        # draw info
+        info = get_info(
+            layer0,
+            layer1,
+            layer2,
+            marker[0],
+            marker[1]
+        )
+
+        stdscr.addstr(
+            HEIGHT +1,
+            1,
+            f"layer0:{info['layer0']} "
+            f"layer1:{info['layer1']} "
+            f"layer2:{info['layer2']}"
+        )
+
+        stdscr.refresh()
+
+        key = stdscr.getch()
+
+        y, x = marker
+
+        if key == ord("w"):
+            y -= 1
+
+        elif key == ord("s"):
+            y += 1
+
+        elif key == ord("a"):
+            x -= 1
+
+        elif key == ord("d"):
+            x += 1
+
+        elif key == ord("q"):
+            break
+
+        if 0 <= y < HEIGHT and 0 <= x < WIDTH:
+            marker = (y, x)
 
 
-def render():
-  size=10
-  map=Map(size)
-  for i in range(size):
-    for j in range(size):
-      print(tiles[map[i,j,ground_tiles]]["symbol"],end=" ")
-      print(tiles[map[i,j,obj_tiles]]["symbol"],end=" ")
-
-    print(" \n \n ")
-  
-  
-if __name__=="__main__":
-  render()
-  
+curses.wrapper(main)

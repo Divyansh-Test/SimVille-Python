@@ -3,7 +3,7 @@
 * =land
 * =stones
 * =walls
-
+* https://www.ascii-code.com/
 # delete it after it all happens.
 2D grid (like 20x20)
 Each cell = tile (grass, water, stone)

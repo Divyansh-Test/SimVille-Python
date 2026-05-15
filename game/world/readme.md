@@ -1,0 +1,1 @@
+Responsible for terrain and world generation. Handles biomes, geology, regions, tiles, caves, rivers, and local fortress maps. Separates global world structure from playable local areas to support large-scale simulation and procedural generation efficiently.

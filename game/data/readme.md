@@ -1,0 +1,1 @@
+stores configurable game definitions like creatures, materials, buildings, items, professions, and stats. Uses external files instead of hardcoded values. Enables balancing, modding, procedural combinations, and rapid iteration without rewriting engine or simulation code.

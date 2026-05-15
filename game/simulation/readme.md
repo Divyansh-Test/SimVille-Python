@@ -1,0 +1,1 @@
+Contains actual game rules and world behavior. Manages creatures, jobs, economy, combat, needs, weather, civilizations, and storytelling. This is the heart of the game where systems interact to create emergent gameplay and unexpected events from simple underlying rules.

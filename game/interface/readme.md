@@ -1,0 +1,1 @@
+Handles player interaction systems like input processing, menus, overlays, hotkeys, debugging tools, and interface flow. Translates user actions into simulation commands while staying separate from rendering and core simulation logic for flexibility.
