@@ -1,3 +1,6 @@
+import random
+from ai.pathfinding import pathfinding
+from simulation.update_world.update_map import layer1
 creature_id=100
 def get_creature():
      global  creature_id
@@ -15,8 +18,11 @@ components={"entity":{},
 
 }
 class system:
-    def movement_system(id):
-        pass
+    def movement_system(id,dest):
+        path=pathfinding(layer1,components["position"][id],dest)
+        while path:
+            x,y=path.pop()
+            components["position"][id]=(x,y)
     
     def create_entity(**kwarg):
         id=get_creature()
@@ -34,14 +40,14 @@ class system:
     
     
     
-    def get_component(id,name):
+    def get_component(self,id,name):
        return components[name].get(id)
        
     
     
     
-    def get_item(id,item):
-      items=get_component(id,"inventory")
+    def get_item(self,id,item):
+      items=self.get_component(id,"inventory")
       if item not in items:
          return 0
     
@@ -49,8 +55,8 @@ class system:
          return items.get(item)
     
     
-    def update_item(id,item,amount):
-        items = get_component(id, "inventory")
+    def update_item(self,id,item,amount):
+        items = self.get_component(id, "inventory")
     
         new_amount = items.get(item, 0) + amount
     
@@ -66,19 +72,19 @@ class system:
     
     
     
-    def update_health(id,amount):
-       health=get_component(id,"health")
+    def update_health(self,id,amount):
+       health=self.get_component(id,"health")
        health+=amount
        components["health"][id]=health
        if health<=0:
-          destroy_entity(id)
+          self.destroy_entity(id)
     
        else:
           
           return True
     
     
-    def destroy_entity(id):
+    def destroy_entity(self,id):
        for comp in components.values():
            if id in  comp:
               del comp[id]

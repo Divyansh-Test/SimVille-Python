@@ -1,4 +1,5 @@
-from world.creature import components,system
+from world.creature import components,system,get_creature
+
 
 
 def update_creature():

@@ -47,3 +47,21 @@ def pathfinding(grid, start, goal):
                 heapq.heappush(openset, (f_score, neighbour))
 
     return None
+
+
+
+if  __name__=="__main__":
+     grid=[[0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0],
+           [0,0,0,0,0,0,0,0,0,0]]
+     start=(0,0)
+     goal=(9,9)
+     path=pathfinding(grid,start,goal)
+     print(path)
