@@ -1,22 +1,46 @@
-import random
-import numpy as np
+from simulation.generate_map import generate_map
 
 
-#layer0=Floor layer1=the thing in floor layer2=the entity on the layer layer3=marker to navigate the map.
+class WorldMap:
+  def  __init__(self,width,height,seed=None):
+     self.width=width
+     self.height=height
+     self.seed=seed
+     self.layer0,self.layer1,self.layer2=generate_map(width,height,seed)
+     self.marker_pos=(5,5)
+     #self.centre_At=self.marker_pos
 
-def generate_map(width, height, seed=None):
-    items=[0,1,2]
-    prob_item=[0.5,0.3,0.2]
-    np.random.seed(seed)
-    layer_0=np.zeros((width, height), dtype=np.int8) # for tile layer
-    layer_1=np.random.choice(items,size=(width, height),p=prob_item) # for object layer
-    layer_2=np.full((width, height),-1, dtype=np.int16) # for entity layer
+  def update_marker(self,dir):
+     old=self.marker_pos
+     if dir=="up":
+        self.marker_pos=(self.marker_pos[0],self.marker_pos[1]-1)
+
+     elif dir== "down":
+        self.marker_pos=(self.marker_pos[0],self.marker_pos[1]+1)
+     elif dir=="left":
+        self.marker_pos=(self.marker_pos[0]-1,self.marker_pos[1])
+
+     elif dir=="right":
+        self.marker_pos=(self.marker_pos[0]+1,self.marker_pos[1])
+
+     if self.marker_pos[0]<0 or self.marker_pos[0]>=self.width or self.marker_pos[1]<0 or self.marker_pos[1]>=self.height:
+        self.marker_pos=old
+
+
+  # def update_centre_point(self,dir):
+  #       old=self.centre_At
+  #       if dir=="ctrl up":
+  #          self.centre_At=(self.centre_At[0],self.centre_At[1]-1)
+
+  #       elif dir== "ctrl down":
+  #          self.centre_At=(self.centre_At[0],self.centre_At[1]+1)
+  #       elif dir=="ctrl left":
+  #          self.centre_At=(self.centre_At[0]-1,self.centre_At[1])
+
+  #       elif dir=="ctrl right":
+  #          self.centre_At=(self.centre_At[0]+1,self.centre_At[1])
+
+  #       if self.centre_At[0]<0 or self.centre_At[0]>=self.width or self.centre_At[1]<0 or self.centre_At[1]>=self.height:
+  #          self.centre_At=old
+       
     
-    return layer_0,layer_1,layer_2
-    
-  
-    
-    
-
-
-

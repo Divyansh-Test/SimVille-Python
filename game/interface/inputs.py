@@ -10,10 +10,15 @@ def  get_input(key):
       return "left"
    elif key==curses.KEY_RIGHT:
       return "right"
+
+   elif key==ord("\t"):
+      return "switch"
    elif key==ord("q"):
       return "quit"
    elif key==ord("i"):
       return "inventory"
+   elif key==ord(" "):
+      return "space"
    elif key==ord("c"):
       return "char"
    elif key==ord("m"):
@@ -32,5 +37,19 @@ def  get_input(key):
       return "options"
    elif key==ord("q"):
       return "quit"
+
+   elif key==575:
+      return "ctrl up"
+
+   elif key==534:
+      return "ctrl down"
+
+   elif key==569:
+      return "ctrl right"
+
+   elif key==554:
+      return "ctrl left"
+
+   
    else:
       return "none"

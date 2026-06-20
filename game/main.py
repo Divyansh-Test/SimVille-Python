@@ -1,2 +1,6 @@
+from core.gameloop import gameloop
+
+
 if __name__=="__main__":
-   pass
+   while True:
+      gameloop()
