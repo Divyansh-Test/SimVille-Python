@@ -8,6 +8,7 @@ from simulation.update_world.update_map import Map,get_layer
 from interface.navigate_menu import navigate_menu
 from interface.update_center import update_center
 from simulation.update_world.update_time import game_time
+from simulation.update_world.update_map import layer0,layer1,layer2
 
 
 
@@ -28,7 +29,7 @@ import numpy as np
 
 
 
-layer0,layer1,layer2=get_layer()
+
 
 menu_items = ["Description", "Follow", "Inventory", "Skills", "Quit"]
 

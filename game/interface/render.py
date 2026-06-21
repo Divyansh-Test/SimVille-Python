@@ -10,6 +10,8 @@ symbol = {
     103: ["agent1", "@"],
     
 }
+from logger_config import get_logger
+logger=get_logger(__name__)
 
 
 
@@ -18,7 +20,7 @@ def render( rows, cols, layer0, layer1, layer2,marker):
 
     output = []
     
-
+    logger.info(f"layer2{layer2}")
     for y in range(rows):
 
         row = ""

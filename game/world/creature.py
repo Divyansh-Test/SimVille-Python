@@ -1,6 +1,7 @@
 import random
 from ai.pathfinding import pathfinding
-from simulation.update_world.update_map import layer1
+from logger_config import get_logger
+logger=get_logger(__name__)
 creature_id=100
 def get_creature():
      global  creature_id
@@ -18,11 +19,14 @@ components={"entity":{},
 
 }
 class system:
-    def movement_system(id,dest):
-        path=pathfinding(layer1,components["position"][id],dest)
+    def movement_system(id,dest,layer0):
+        path=pathfinding(layer0,components["position"][id],dest)
+        
         while path:
             x,y=path.pop()
             components["position"][id]=(x,y)
+            return True
+        
     
     def create_entity(**kwarg):
         id=get_creature()

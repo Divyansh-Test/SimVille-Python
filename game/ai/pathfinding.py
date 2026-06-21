@@ -6,10 +6,12 @@ def heuristic(a, b):
 
 
 def pathfinding(grid, start, goal):
+    start=tuple(start)
+    goal=tuple(goal)
     way = {}
-    openset = []
+    openset = []    
     heapq.heappush(openset, (0, start))
-
+    
     row = len(grid)
     col = len(grid[0])
     g_score = {start: 0}
