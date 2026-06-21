@@ -9,6 +9,7 @@ from interface.navigate_menu import navigate_menu
 from interface.update_center import update_center
 from simulation.update_world.update_time import game_time
 from simulation.update_world.update_map import layer0,layer1,layer2
+from simulation.update_all import pause_continue
 
 
 
@@ -104,8 +105,9 @@ def Char_menu(stdscr, win, selected):
 
 map_win_edit=True
 selected =0
+pause=False
 def main(stdscr):
-    global map_win_edit,selected
+    global map_win_edit,selected,pause
     curses.curs_set(0)
     curses.start_color()
     curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_RED)
@@ -125,6 +127,8 @@ def main(stdscr):
     
     key = stdscr.getch()
     key=get_input(key)
+    if key=="space":
+        pause_continue()
     if key=="switch":
         map_win_edit=not map_win_edit
 
