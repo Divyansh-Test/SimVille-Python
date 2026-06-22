@@ -3,9 +3,11 @@ from world.creature import components
 import copy
 from logger_config import get_logger
 logger=get_logger(__name__)
-Map=WorldMap(10,10,seed=42)
+height=10
+width=10
+Map=WorldMap(height,width,seed=42)
 layer0,layer1,layer2=Map.layer0,Map.layer1,Map.layer2
-layer2_orig=copy.deepcopy(layer2)
+layer1_orig=copy.deepcopy(layer1)
 #logger.info(f"layer2_orig{layer2_orig}")
 def get_layer():
    global layer0,layer1,layer2
@@ -13,10 +15,10 @@ def get_layer():
 
 def update_map():
     # restore original layer2
-    layer2[:][:] =layer2_orig[:][:]
+    layer1[:][:] =layer1_orig[:][:]
     # for y, row in enumerate(layer2_orig):
     #     layer2[y][:] = row[:]
     for creature_id, (x, y) in components["position"].items():
-        layer2[y][x] = creature_id
+        layer1[y][x] = creature_id
 
     return layer2

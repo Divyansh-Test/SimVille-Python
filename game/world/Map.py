@@ -6,7 +6,7 @@ class WorldMap:
      self.width=width
      self.height=height
      self.seed=seed
-     self.layer0,self.layer1,self.layer2=generate_map(width,height,seed)
+     self.layer0,self.layer1,self.layer2,=generate_map(width,height,seed)
      self.marker_pos=(5,5)
      #self.centre_At=self.marker_pos
 

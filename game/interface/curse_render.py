@@ -4,7 +4,7 @@ from interface.inputs import get_input
 from interface.render import render
 from interface.update_marker import update_marker
 #from world.map import generate_map
-from simulation.update_world.update_map import Map,get_layer
+from simulation.update_world.update_map import Map,get_layer,height,width
 from interface.navigate_menu import navigate_menu
 from interface.update_center import update_center
 from simulation.update_world.update_time import game_time
@@ -45,12 +45,11 @@ def Map_win(win):
     # layer_2_part=np.array(layer2)[Map.marker_pos[1]-5:Map.marker_pos[1]+5,Map.marker_pos[0]-5:Map.marker_pos[0]+5]
     win.clear()
     win.border()
-    render_map=render(10,10,layer0,layer1,layer2,Map.marker_pos)
+    render_map=render(height,width,layer0,layer1,layer2,Map.marker_pos)
     for i in range(len(render_map)):
         win.addstr(i+1,1,render_map[i])
 
-    win.addstr(12,1,f"centre at {Map.marker_pos}")
-    win.addstr(13,1,f"marker at {Map.marker_pos}")
+   
     
     
     win.refresh()
@@ -79,6 +78,8 @@ def Main_menu(
 def Time_win(win):
     win.clear()
     win.border()
+    win.addstr(0,1,f"centre at {Map.marker_pos}")
+    win.addstr(0,1,f"marker at {Map.marker_pos}")
     win.addstr(1,1,f"Time {game_time.hour}:{game_time.min} Day {game_time.day} Month {game_time.month} Year {game_time.year}")
     win.refresh()
     
@@ -145,7 +146,7 @@ def main(stdscr):
     else:
         
         selected=navigate_menu(key,selected,len(menu_items))
-    Map_win(map_win)
+    # Map_win(map_win)
     Time_win(time_win)
         
     Char_menu(stdscr, char_win,selected)

@@ -9,7 +9,8 @@ def get_creature():
      return creature_id
 
 
-components={"entity":{},
+components={"info":{},
+"entity":{},
 "health":{},
 "hunger":{},
 "position":{},
