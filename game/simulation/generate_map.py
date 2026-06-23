@@ -12,7 +12,7 @@ def generate_map(width, height, seed=None):
     np.random.seed(seed)
     layer_0=np.zeros((width, height), dtype=np.int8) # for tile layer
     #This is the fixed layer later will be replaced by procedural generation.
-    layer_1=np.zeros((width, height), dtype=np.int8)
+    layer_1=np.zeros((width, height), dtype=np.int16)
     
     rng = np.random.default_rng()
 

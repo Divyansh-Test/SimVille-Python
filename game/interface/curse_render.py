@@ -146,7 +146,7 @@ def main(stdscr):
     else:
         
         selected=navigate_menu(key,selected,len(menu_items))
-    # Map_win(map_win)
+    Map_win(map_win)
     Time_win(time_win)
         
     Char_menu(stdscr, char_win,selected)

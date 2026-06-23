@@ -3,8 +3,24 @@ from ai.pathfinding import pathfinding
 from logger_config import get_logger
 logger=get_logger(__name__)
 creature_id=100
-def get_creature():
-     global  creature_id
+tree_id=200
+animal_id=300
+stone_id=400
+
+def get_creature(type):
+     global  creature_id,tree_id,animal_id,stone_id
+     if type=="tree":
+         tree_id+=1
+         return tree_id
+
+     elif type=="animal":
+         animal_id+=1
+         return animal_id
+     elif type=="stone":
+         stone_id+=1
+         return stone_id
+     else:
+         logger.info("no type")
      creature_id+=1
      return creature_id
 
@@ -30,7 +46,7 @@ class system:
         
     
     def create_entity(**kwarg):
-        id=get_creature()
+        id=get_creature(kwarg["info"]["type"])
         for key,value in kwarg.items():
             components[key][id]=value
         components["entity"]=id
