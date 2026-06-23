@@ -15,6 +15,6 @@ def update_creature():
   system.movement_system(c1,[4,4],layer0)
   system.movement_system(c2,[4,4],layer0)
   system.movement_system(c3,[4,4],layer0)
-  logger.info(f"The position of the creature with id {c1} and name {components['info'][c1]['name']} is {components['position'][c1]}")
+  #logger.info(f"The position of the creature with id {c1} and name {components['info'][c1]['name']} is {components['position'][c1]}")
   
    

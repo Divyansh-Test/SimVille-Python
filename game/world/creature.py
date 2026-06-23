@@ -31,18 +31,25 @@ components={"info":{},
 "hunger":{},
 "position":{},
 "inventory":{},
-"state":{}
-
-
+"state":{},
+"jobs":{},
+"path":{}
 }
+
+
 class system:
     def movement_system(id,dest,layer0):
-        path=pathfinding(layer0,components["position"][id],dest)
+        path=components["path"].get(id)
+        if not path and not (components["position"][id]==tuple(dest)):
+            path=pathfinding(layer0,components["position"][id],dest)
+            components["path"][id]=path
+            
+            logger.info(f"path called and path is {path}")
         
-        while path:
+        if path:
             x,y=path.pop()
             components["position"][id]=(x,y)
-            return True
+        return True
         
     
     def create_entity(**kwarg):
@@ -82,6 +89,9 @@ class system:
     
     def update_component(self, entity_id, component, amount=0, key=None):
         data = self.get_component(entity_id, component)
+        
+        if data is None:
+            return False
 
         if key is None:
             # health, hunger, mana...
@@ -106,6 +116,11 @@ class system:
 
         return True
     
+    # def get_path(self,id,start,end,layer0):
+    #     path=pathfinding(layer0,start,end)
+    #     components["path"][id]=path
+    #     logger.info(f"path called and path is {path}")
+    #     return path
     
     
     def destroy_entity(self,id):
