@@ -76,33 +76,36 @@ class system:
          return items.get(item)
     
     
-    def update_item(self,id,item,amount):
-        items = self.get_component(id, "inventory")
     
-        new_amount = items.get(item, 0) + amount
     
-        if new_amount <= 0:
-            if item in items:
-                del items[item]
+    
+    
+    def update_component(self, entity_id, component, amount=0, key=None):
+        data = self.get_component(entity_id, component)
+
+        if key is None:
+            # health, hunger, mana...
+            data += amount
+            components[component][entity_id] = data
+
+            if component == "health" and data <= 0:
+                self.destroy_entity(entity_id)
+        
+        
         else:
-            items[item] = new_amount
-    
+            # inventory or other nested dict components
+            new_value = data.get(key, 0) + amount
+
+            
+            if new_value <= 0:
+                data.pop(key, None)
+            
+            
+            else:
+                data[key] = new_value
+
         return True
     
-    
-    
-    
-    
-    def update_health(self,id,amount):
-       health=self.get_component(id,"health")
-       health+=amount
-       components["health"][id]=health
-       if health<=0:
-          self.destroy_entity(id)
-    
-       else:
-          
-          return True
     
     
     def destroy_entity(self,id):
