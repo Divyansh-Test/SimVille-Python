@@ -19,9 +19,9 @@ def generate_map(width, height, seed=None):
     idx = rng.choice(width * height, size=25, replace=False)
     pos = np.column_stack((idx % width, idx // width))
     for i in range(14):
-        layer_1[pos[i][0],pos[i][1]]=system.create_entity(info={"name":"","type":"tree"},position=(pos[i][0],pos[i][1]),health=10,inventory={"wood":10,"stone":10},state="idle")
+        layer_1[pos[i][0],pos[i][1]]=system.create_entity(info={"name":"","type":"tree"},position=(pos[i][0],pos[i][1]),health=10,inventory={"wood":10},state="idle")
     for i in range(14,25):
-        layer_1[pos[i][0],pos[i][1]]=system.create_entity(info={"name":"","type":"stone"},position=(pos[i][0],pos[i][1]),health=10,inventory={"wood":10,"stone":10},state="idle")
+        layer_1[pos[i][0],pos[i][1]]=system.create_entity(info={"name":"","type":"stone"},position=(pos[i][0],pos[i][1]),health=10,inventory={"stone":10},state="idle")
 
     
 

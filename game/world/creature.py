@@ -1,6 +1,7 @@
 import random
 from ai.pathfinding import pathfinding
 from logger_config import get_logger
+
 logger=get_logger(__name__)
 creature_id=100
 tree_id=200
@@ -20,7 +21,8 @@ def get_creature(type):
          stone_id+=1
          return stone_id
      else:
-         logger.info("no type")
+         pass
+         # logger.info("no type")
      creature_id+=1
      return creature_id
 
@@ -56,7 +58,7 @@ class system:
         id=get_creature(kwarg["info"]["type"])
         for key,value in kwarg.items():
             components[key][id]=value
-        components["entity"]=id
+        #components["entity"][]=id
         return id
         
        
@@ -123,7 +125,9 @@ class system:
     #     return path
     
     
-    def destroy_entity(self,id):
+    def destroy_entity(id):
        for comp in components.values():
+           
+           
            if id in  comp:
               del comp[id]

@@ -1,6 +1,6 @@
 from world.Map import WorldMap
-from world.creature import components
 import copy
+from world.creature import components
 from logger_config import get_logger
 logger=get_logger(__name__)
 height=10
