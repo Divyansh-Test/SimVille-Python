@@ -3,7 +3,7 @@ modules = ["python-3.11"]
 expertMode = true
 
 [nix]
-packages = ["tree"]
+packages = ["libffi", "pkg-config", "tree"]
 
 [workflows]
 
