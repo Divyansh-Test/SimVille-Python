@@ -1,1 +1,0 @@
-Controls decision-making systems for creatures and factions. Includes utility AI, planners, behaviors, memory systems, blackboards, and need evaluation. Determines how entities react dynamically to changing environments, emotions, goals, danger, and social interactions.

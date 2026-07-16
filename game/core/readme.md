@@ -1,1 +1,0 @@
-Base engine systems shared by everything else. Handles timing, events, scheduling, ECS, random generation, and update order. Contains no gameplay logic. Keeps simulation stable, deterministic, and modular so every higher-level system can communicate and run consistently without tight coupling.

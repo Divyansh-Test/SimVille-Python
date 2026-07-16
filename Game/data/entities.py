@@ -1,0 +1,27 @@
+ENTITIES={
+  "Tree":{
+    "Health":(80,100),
+    "Inventory":{
+      "Wood":(10,20),
+      "Food":(1,10)
+    }
+  },
+  "Stone":{
+    "Health":(80,100),
+    "Inventory":{
+      "Stone":(15,30),
+      "Flint":(1,8)
+    }
+  },
+  "Human":{
+     "Health":(80,100),
+     "Hunger":(80,100),
+     "Inventory":{
+       "Wood":(5,10),
+       "Stone":(5,10)
+     }
+  },
+  "House":{
+    "Health":500
+  }
+}
