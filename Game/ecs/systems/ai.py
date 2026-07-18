@@ -71,3 +71,8 @@ class AISystem:
             else:
                 logger.info(f"Entity {entity} assigning base Job: {job_data.get('type')}")
                 self.world.add_component(entity, new_job)
+
+
+    def pseudo_update(self):
+        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":90}))
+        self.world.update_component(52,Job({"type":"Gather","target":63,"priority":30}))

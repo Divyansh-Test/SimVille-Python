@@ -9,6 +9,8 @@ from ecs.components.renderable import Renderable
 from ecs.components.path import Path
 from ecs.components.move_to import MoveTo
 from ecs.components.blueprint import Blueprint
+from ecs.components.thrist import Thrist
+from ecs.components.growth import Growth
 from logger_config import get_logger
 logger=get_logger(__name__)
 
@@ -27,7 +29,10 @@ class World:
       Renderable:{},
       Path:{},
       MoveTo:{},
-      Blueprint:{}
+      Blueprint:{},
+      
+      Growth:{},
+      Thrist:{},
     }
     
   def create_entity(self):
@@ -43,8 +48,8 @@ class World:
       if entity not in self.components[component_type]:
         self.add_component(entity,comp)
         continue
+      # logger.info(f"Component {component_type} of entity {entity} updated and component is {(list(comp.__dict__.values())[0])}")
       self.components[component_type][entity].update(list(comp.__dict__.values())[0])
-      #logger.info(f"Component {component_type} of entity {entity} updated and component is {(list(comp.__dict__.values())[0])}")
       
 
   def remove_component(self,entity,component_type):

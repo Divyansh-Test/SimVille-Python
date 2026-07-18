@@ -18,10 +18,11 @@ from logger_config import get_logger
 logger=get_logger(__name__)
 
 class JobSystem:
-   def __init__(self,world,map,spawnner):
+   def __init__(self,world,map,spawnner,growthSystem):
       self.world=world
       self.map=map
       self.spawnner=spawnner
+      self.growthSystem=growthSystem
       self.handlers={
          "Gather":self.Gather,
          "Consume":self.Consume,
@@ -32,11 +33,19 @@ class JobSystem:
 
    def update(self):
      for entity in self.world.get_entity_with(Job):
-        if not self.world.get_component(entity,Job).job:
+        jobs=self.world.get_component(entity,Job).job
+        if not jobs:
            self.world.remove_component(entity,Job)
-     for entity in self.world.get_entity_with(Job):
+           continue
+     
         #this is the error bcuz we are accessing the last element of a empty list.
-        entity_job=self.world.get_component(entity,Job).job[-1]
+        highest_priority=0
+        entity_job=None
+        for job in jobs:
+            if job["priority"]>highest_priority:
+                highest_priority=job["priority"]
+                entity_job=job
+        logger.info(f"Entity {entity} has job {entity_job}")
         handler=self.handlers.get(entity_job["type"])
         if handler:
            handler(entity,entity_job)
@@ -55,7 +64,7 @@ class JobSystem:
       
 
 
-   def  Gather(self,entity,job): # job dict = {"type":"Gather","target":entity_id}
+   def  Gather(self,entity,job): # job dict = {"type":"Gather","target":entity_id,"item":item_name}
       
 
 
@@ -64,7 +73,8 @@ class JobSystem:
       # I think ki ye moveTo bekar hai Research karo
       target_id=job["target"]
       target_cord=self.move_job(entity,target_id)
-      self.world.add_component(entity,State(f"Gathering {self.world.get_component(target_id,Type).type}"))
+      type=self.world.get_component(target_id,Type).type # instead we can take type from job as shore_res is the type but need water.
+      self.world.add_component(entity,State(f"Gathering {type}")) 
       if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
           self.world.remove_component(entity,MoveTo)
           self.world.remove_component(entity,Path)
@@ -72,12 +82,13 @@ class JobSystem:
           self.world.update_component(target_id,Health(health))
           if self.world.get_component(target_id,Health).health<=0:
           
-             self.world.get_component(entity,Job).job.pop()
+             self.world.get_component(entity,Job).job.remove(job)
              self.world.add_component(entity,State("idle"))
              target_inventory=self.world.get_component(target_id,Inventory).items
              entity_inventory=self.world.get_component(entity,Inventory).items
              for item in target_inventory.keys():
                  entity_inventory[item]=entity_inventory.get(item,0)+target_inventory[item]
+             self.growthSystem.add_respawn(type,target_cord)
              self.world.destroy_entity(target_id)
              
 
@@ -101,7 +112,7 @@ class JobSystem:
        inventory = self.world.get_component(entity, Inventory)
        if inventory.items.get(item, 0) <= 0 :
            logger.info(f"Entity {entity} does not have {item} to consume oor enough stats.")
-           self.world.get_component(entity, Job).job.pop()
+           self.world.get_component(entity, Job).job.remove(job)
            self.world.add_component(entity, State("idle"))
            return
        self.world.update_component(entity, State(f"Consuming {item}"))
@@ -123,7 +134,7 @@ class JobSystem:
            self.world.update_component(entity, component_type(final_value))
 
        if all_full:
-           x=self.world.get_component(entity, Job).job.pop()
+           x=self.world.get_component(entity, Job).job.remove(job)
            logger.info(f"Entity {entity} has finished consuming {item} and job is {x}")
            self.world.add_component(entity, State("idle"))
            return
@@ -163,7 +174,7 @@ class JobSystem:
                  self.world.update_component(entity,Inventory({item:entity_stock+target_stock}))
                  self.world.update_component(job["target"],Inventory({item:0}))
          
-         self.world.get_component(entity,Job).job.pop()   
+         self.world.get_component(entity,Job).job.remove(job)  
          self.world.update_component(entity,State("idle"))
 
 
@@ -184,7 +195,7 @@ class JobSystem:
          for output_item,output_amount in output_items.items():
              current_amount=self.world.get_component(entity,Inventory).items.get(output_item,0)
              self.world.update_component(entity,Inventory({output_item:current_amount+output_amount}))
-      self.world.get_component(entity,Job).job.pop()
+      self.world.get_component(entity,Job).job.remove(job)
       self.world.update_component(entity,State("idle"))
 
 
@@ -205,7 +216,7 @@ class JobSystem:
          pos=self.world.get_component(target,Position)
          self.spawnner.spawn_entity(item,(pos.x,pos.y))
          self.world.update_component(entity,State("idle"))
-         self.world.get_component(entity,Job).job.pop()
+         self.world.get_component(entity,Job).job.remove(job)
          self.world.destroy_entity(target)
       
       

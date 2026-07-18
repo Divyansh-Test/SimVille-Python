@@ -4,14 +4,18 @@ ENTITIES={
     "Inventory":{
       "Wood":(10,20),
       "Food":(1,10)
-    }
+    },
+    "interval":4,
+    "death_age":(25,30),
+    "respawn_interval":(30,50)
   },
   "Stone":{
     "Health":(80,100),
     "Inventory":{
       "Stone":(15,30),
-      "Flint":(1,8)
-    }
+      "Flint":(1,8),
+    },
+    "respawn_interval":(30,50)
   },
   "Human":{
      "Health":(80,100),
@@ -19,9 +23,18 @@ ENTITIES={
      "Inventory":{
        "Wood":(5,10),
        "Stone":(5,10)
-     }
+     },
+     "interval":8,
+     "death_age":(80,100)
   },
   "House":{
     "Health":500
+  },
+  "ShoreResource":{
+    "Health":(80,100),
+    "Inventory":{
+      "Water":(10,20),
+    },
+    "respawn_interval":(10,20)
   }
 }

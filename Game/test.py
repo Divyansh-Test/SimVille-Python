@@ -13,25 +13,22 @@ from interface.render_system import RenderSystem
 from ecs.systems.job import JobSystem
 from ecs.systems.ai import AISystem
 from ecs.systems.hunger import HungerSystem
-# from logger_config import get_logger
+from ecs.systems.growth import GrowthSystem
+from logger_config import get_logger
 import  curses
 import time
 world=World()
 map=Map(15,15)
 movement=MovementSystem(world)
 spawn=Spawner(world,map.terrain_layer)
-job=JobSystem(world,map,spawn)
+growth=GrowthSystem(world,spawn)
+job=JobSystem(world,map,spawn,growth)
 ai=AISystem(world,map,spawn)
 hunger=HungerSystem(world)
-import logging
-logging.basicConfig(
-    filename="App.log",
-    filemode="w",   # overwrite file on each run
-    level=logging.INFO,
-    format="%(asctime)s | %(filename)s | %(message)s"
-)
-logger=logging.getLogger(__name__)
 
+logger=get_logger(__name__)
+for _ in range(10):
+    logger.info(spawn.find_tile_near_water())
 
 
 
@@ -56,29 +53,47 @@ for _ in range(1):
 for _ in range(1):
    spawn.spawn_entity("NPC")
 
-
+for _ in range(21):
+    spawn.spawn_entity("Shore")
 
 
 logger.info(f"Entity 52 has job ")
 
-for e in world.get_entity_with(Type):
-    logger.info(f"Entity {e} has type {world.get_component(e,Type).type} ")
-# ai.update()
-# if world.has_component(52,Job):
-#     logger.info(f"Entity 52 has job {world.get_component(52,Job).job}")
+# for e in world.get_entity_with(Type):
+#     logger.info(f"Entity {e} has type {world.get_component(e,Type).type} ")
+
+
+
+
+
+ai.pseudo_update()
+if world.has_component(52,Job):
+    logger.info(f"Entity 52 has job {world.get_component(52,Job).job}")
 # if world.has_component(53,Job):
      # logger.info(f"Entity 53 has job {world.get_component(53,Job).job}")
+
+
+
+
+
 while True:
-    logger.info(f'position of entity 52 is {world.get_component(52,Position).x,world.get_component(52,Position).y}')
-    ai.update()
+    world.tick+=1
+    # logger.info(f'position of entity 52 is {world.get_component(52,Position).x,world.get_component(52,Position).y}')
+    #ai.update()
+    growth.update()
     
     hunger.update()
     job.update()
     movement.update()
-    # render_system.update()
-    # time.sleep(0.4)
-    logger.info(f"inventory of entity 52 is {world.get_component(52,Inventory).items}")
+    render_system.update()
+    time.sleep(0.2)
+    # logger.info(f"inventory of entity 52 is {world.get_component(52,Inventory).items}")
    
+
+
+
+
+
 def Logs():
     target_id = 52
 
