@@ -1,0 +1,67 @@
+ENTITIES={
+  "Tree":{
+    "Health":(80,100),
+    "Inventory":{
+      "Wood":(10,20),
+      "Food":(1,10)
+    },
+    "interval":4,
+    "death_age":(25,30),
+    "respawn_interval":(30,50)
+  },
+  "Stone":{
+    "Health":(80,100),
+    "Inventory":{
+      "Stone":(15,30),
+      "Flint":(1,8),
+    },
+    "respawn_interval":(30,50)
+  },
+  "Human":{
+     "Health":(80,100),
+     "Hunger":(80,100),
+     "Inventory":{
+       "Wood":(50,100),
+       "Stone":(50,100),
+       "Seed":(10,20)
+     },
+     "interval":8,
+     "death_age":(80,100)
+  },
+  "House":{
+    "Health":500
+  },
+  "FarmPlot":{
+    "Health":100
+  },
+  "ShoreResource":{
+    "Health":(80,100),
+    "Inventory":{
+      "Water":(10,20),
+    },
+    "respawn_interval":(10,20),
+  },
+  "Seedling":{
+    "Health":(10,20),
+    "Inventory":{
+      "Seed":1
+    },
+    "interval":1,
+    "death_age":(5,10),
+    "next_phase":"Plant",
+    "spawn_parent":["FarmPlot"],
+  },
+  "Plant":{
+    "Health":(40,50),
+    "Inventory":{
+      "Food":(35,40)
+    },
+    "death_age":(4,7),
+    "interval":1,
+    "death_age":(5,10), # change the not needed parametees for this like respawn_interval or other items.
+
+    "spawn_parent":["FarmPlot"],
+    "respawn_interval":(5,9)
+    
+  }
+}
