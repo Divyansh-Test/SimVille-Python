@@ -3,4 +3,5 @@
 .upm 
 .replit
 .agents
-.venv
+venv/
+.venv/
