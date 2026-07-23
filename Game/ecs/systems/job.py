@@ -13,6 +13,7 @@ from ecs.component_registry import COMPONENTS
 from data.items import ITEMS
 from data.recipes import RECIPES
 from data.blueprints import BLUEPRINTS
+import time
 
 from logger_config import get_logger
 logger=get_logger(__name__)
@@ -28,7 +29,8 @@ class JobSystem:
          "Consume":self.Consume,
          "Transfer":self.Tansfer,
          "Craft":self.Craft,
-         "Build":self.Build
+         "Build":self.Build,
+         "Explore":self.Explore,
       }
 
    def update(self):
@@ -72,7 +74,9 @@ class JobSystem:
 
       # I think ki ye moveTo bekar hai Research karo
       target_id=job["target"]
-      target_cord=self.move_job(entity,target_id)
+      target=self.world.get_component(target_id,Position)
+      target=(target.x,target.y)
+      target_cord=self.move_job(entity,target)
       type=self.world.get_component(target_id,Type).type # instead we can take type from job as shore_res is the type but need water.
       self.world.add_component(entity,State(f"Gathering {type}")) 
       if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
@@ -96,8 +100,8 @@ class JobSystem:
    def move_job(self,entity,target):
       #This function will remove the line of code and also add path to the entity this will be only used by the jobs which needs to move somewhere.
       # logger.info(f"target is {target}")
-      target=self.world.get_component(target,Position)
-      target=(target.x,target.y)
+      
+      
       # logger.info(f"target is {target}")
       self.get_path(entity,target)
       if not self.world.has_component(entity,MoveTo):
@@ -150,14 +154,18 @@ class JobSystem:
    
    def Tansfer(self,entity,job): #job_dict={type:Tranfer,target=entity_id,action:put/take,item:item_name,amount:amount}
       item,amount=job["item"],job["amount"]
-      target_cord=self.move_job(entity,job["target"])
+      target_id=job["target"]
+      target=self.world.get_component(target_id,Position)
+      target=(target.x,target.y)
+      target_cord=self.move_job(entity,target)
       direction = "from" if job["action"] == "take" else "into"
       self.world.update_component(entity,State(f"{job['action']} {amount} {item} {direction} {job['target']}"))
       if (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
          self.world.remove_component(entity,MoveTo)
          self.world.remove_component(entity,Path)
          entity_stock=self.world.get_component(entity,Inventory).items.get(item,0)
-         target_stock=self.world.get_component(job["target"],Inventory).items.get(item,0)
+         logger.info(f'target oitems are {self.world.get_component(target_id,Inventory).items.get(item)}')
+         target_stock=self.world.get_component(target_id,Inventory).items.get(item,0)
          
          if  job["action"]=="put":
              if entity_stock>=amount:
@@ -167,6 +175,7 @@ class JobSystem:
                 self.world.update_component(entity,Inventory({item:0}))
                 self.world.update_component(job["target"],Inventory({item:target_stock+entity_stock}))
          elif  job["action"]=="take":
+             logger.info(f"Entity {entity} is taking {amount} {item} from {job['target']} which ahs stock {target_stock}")
              if target_stock>=amount:
                  self.world.update_component(entity,Inventory({item:entity_stock+amount}))
                  self.world.update_component(job["target"],Inventory({item:target_stock-amount}))
@@ -204,28 +213,59 @@ class JobSystem:
    def Build(self,entity,job):
       target=job["target"]
       item=self.world.get_component(target,Blueprint).blueprint   
+      
       item_req=BLUEPRINTS.get(item,{}).get("Input",0)
       available_item=self.world.get_component(target,Inventory).items
       
-      logger.info(f'The new dict is {available_item} and items needed are {item_req}')
+      logger.info(f'The item is {item} and  new dict is {available_item} and items needed are {item_req}')
       if all(available_item.get(k, 0) >= v for k, v in item_req.items()):
           
          
          logger.info(f"Entity {entity} has enough items to build")
          self.world.update_component(entity,State(f"Building {item}"))
          pos=self.world.get_component(target,Position)
-         self.spawnner.spawn_entity(item,(pos.x,pos.y))
-         self.world.update_component(entity,State("idle"))
+         logger.info(f"Position of target is {pos.x,pos.y}")
          self.world.get_component(entity,Job).job.remove(job)
          self.world.destroy_entity(target)
-      
-      
          
-         
-       
-       
+         self.spawnner.spawn_entity(item,(pos.x,pos.y),builder_entity=entity)
+         self.world.update_component(entity,State("idle"))
 
-       
+
+
+   def Explore(self,entity,job):
+      target=job["target"]
+      target_cord=self.move_job(entity,target)
+      self.world.update_component(entity,State(f"Exploring the world"))
+      if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
+          self.world.remove_component(entity,MoveTo)
+          self.world.remove_component(entity,Path)
+          self.world.get_component(entity,Job).job.remove(job)
+          self.world.update_component(entity,State("idle"))
+
+
+
+
+   def Plant(self,entity,job):
+      entity_inventory=self.world.get_component(entity,Inventory).items
+      if entity_inventory.get("Seed",0)<=0:
+         self.world.get_component(entity,Job).job.remove(job)
+         self.world.update_component(entity,State("idle"))
+         return
+      target_id=job["target"]
+      target=self.world.get_component(target_id,Position)
+      target=(target.x,target.y)
+      target_cord=self.move_job(entity,target)
+      target_inventory=self.world.get_component(target_id,Inventory).items
+      if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
+          self.world.remove_component(entity,MoveTo)
+          self.world.remove_component(entity,Path)
+          if target_inventory.get("Seed",0)<=0:
+             self.world.get_component(entity,Job).job.remove(job)
+             self.world.update_component(entity,State("idle"))
+             return
+          self.world.update_component(entity,State(f"Planting Seed"))
+          self.spawnner.spawn_entity("Seedling",target_cord)
+          self.world.get_component(entity,Job).job.remove(job)
+             
       
-
-

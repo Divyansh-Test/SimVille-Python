@@ -14,14 +14,17 @@ from ecs.systems.job import JobSystem
 from ecs.systems.ai import AISystem
 from ecs.systems.hunger import HungerSystem
 from ecs.systems.growth import GrowthSystem
+from ecs.systems.vision import VisionSystem
 from logger_config import get_logger
 import  curses
 import time
-world=World()
-map=Map(15,15)
+width,height =(15,15)
+world=World(width,height)
+map=Map(width,height)
 movement=MovementSystem(world)
 spawn=Spawner(world,map.terrain_layer)
 growth=GrowthSystem(world,spawn)
+vision=VisionSystem(world)
 job=JobSystem(world,map,spawn,growth)
 ai=AISystem(world,map,spawn)
 hunger=HungerSystem(world)
@@ -81,13 +84,14 @@ while True:
     # logger.info(f'position of entity 52 is {world.get_component(52,Position).x,world.get_component(52,Position).y}')
     #ai.update()
     growth.update()
-    
+    vision.update()
     hunger.update()
     job.update()
     movement.update()
     render_system.update()
-    time.sleep(0.2)
+    time.sleep(0.5)
     # logger.info(f"inventory of entity 52 is {world.get_component(52,Inventory).items}")
+    # logger.info(f"inventory of entity 51 is {world.get_component(51,Inventory).items}")
    
 
 

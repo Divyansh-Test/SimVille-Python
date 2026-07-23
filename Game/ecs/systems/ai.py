@@ -2,6 +2,7 @@ from ecs.components.job import Job
 from ecs.components.hunger import Hunger
 from ecs.systems.hunger_rules import hunger_rules
 from ecs.systems.work_rules import work_rules
+from ecs.components.blueprint import Blueprint
 from logger_config import get_logger
 
 logger = get_logger(__name__)
@@ -74,5 +75,11 @@ class AISystem:
 
 
     def pseudo_update(self):
-        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":90}))
-        self.world.update_component(52,Job({"type":"Gather","target":63,"priority":30}))
+        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":50}))
+        # self.world.update_component(52,Job({"type":"Gather","target":63,"priority":30}))
+        # # self.world.update_component(52,Job({"type":"Explore","target":(3,8),"priority":95}))
+        # self.world.update_component(52,Job({"type":"Transfer","target":51,"action":"take","item":"Wood","amount":10,"priority":95}))
+        id=self.spawner.spawn_entity("Construction Site",blueprint="Farm Plot",builder_entity=52)
+        self.world.update_component(52,Job({"type":"Build","target":id,"priority":85}))
+        self.world. update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Wood","amount":4,"priority":90}))
+        self.world.update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Stone","amount":4,"priority":90}))

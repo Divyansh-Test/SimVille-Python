@@ -21,8 +21,8 @@ ENTITIES={
      "Health":(80,100),
      "Hunger":(80,100),
      "Inventory":{
-       "Wood":(5,10),
-       "Stone":(5,10)
+       "Wood":(50,100),
+       "Stone":(50,100)
      },
      "interval":8,
      "death_age":(80,100)
@@ -30,11 +30,34 @@ ENTITIES={
   "House":{
     "Health":500
   },
+  "FarmPlot":{
+    "Health":100
+  },
   "ShoreResource":{
     "Health":(80,100),
     "Inventory":{
       "Water":(10,20),
     },
-    "respawn_interval":(10,20)
+    "respawn_interval":(10,20),
+  },
+  "Seedling":{
+    "Health":(10,20),
+    "Inventory":{
+      "Seed":1
+    },
+    "interval":10,
+    "death_age":(10,20),
+    "next_phase":"Plant",
+    "spawn_parent":["FarmPlot"],
+  },
+  "Plant":{
+    "Health":(40,50),
+    "Inventory":{
+      "Food":(35,40)
+    },
+    "interval":1,
+    "death_age":(4,7),
+    "spawn_parent":["FarmPlot"],
+    
   }
 }

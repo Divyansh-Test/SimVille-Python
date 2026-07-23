@@ -13,6 +13,13 @@ class MovementSystem:
         for entity in self.world.get_entity_with(Position,MoveTo):
             # logger.info(f"Entity {entity} is moving and has a path {self.world.get_component(entity,Path).path}")
             next=self.world.get_component(entity,Path).path.pop()
-            self.world.get_component(entity,Position).x=next[0]
-            self.world.get_component(entity,Position).y=next[1]
+            pos=self.world.get_component(entity,Position)
+            prev_pos=(pos.x,pos.y)
+            pos.x,pos.y=next
+            self.world.position_to_entity[prev_pos].remove(entity)
+            key = (pos.x, pos.y)
+            self.world.position_to_entity.setdefault(key, []).append(entity)
+            
+            
+            
             

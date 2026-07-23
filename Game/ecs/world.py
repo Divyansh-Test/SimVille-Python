@@ -11,13 +11,17 @@ from ecs.components.move_to import MoveTo
 from ecs.components.blueprint import Blueprint
 from ecs.components.thrist import Thrist
 from ecs.components.growth import Growth
+from ecs.components.vision import Vision
 from logger_config import get_logger
 logger=get_logger(__name__)
 
 class World:
-  def __init__(self):
+  def __init__(self,width,height):
+    self.width=width
+    self.height=height
     self.next_entity_id=0
     self.tick=0
+    self.position_to_entity={}
     self.components={
       Position:{},
       Health:{},
@@ -30,6 +34,7 @@ class World:
       Path:{},
       MoveTo:{},
       Blueprint:{},
+      Vision:{},
       
       Growth:{},
       Thrist:{},
@@ -45,6 +50,9 @@ class World:
       component_type=type(comp)
       if component_type not in self.components:
         raise ValueError(f"Component type {component_type} not found in world")
+
+      if component_type==Position:
+        self.position_to_entity[(comp.x,comp.y)]=self.position_to_entity.get((comp.x,comp.y),[]).append(entity)  
       if entity not in self.components[component_type]:
         self.add_component(entity,comp)
         continue
@@ -75,6 +83,8 @@ class World:
   def add_component(self,entity,*args):
     for component in args:
       component_type=type(component)
+      if component_type == Position:
+        self.position_to_entity[(component.x,component.y)]=[entity]
       self.components[component_type][entity]=component
 
 
@@ -107,14 +117,21 @@ class World:
     
 
   def destroy_entity(self,entity):
-    for component_type in self.components.values():
-      component_type.pop(entity,None)
+    pos=self.get_component(entity,Position)
+    
+    for component_name,component_data in self.components.items():
+      logger.info(f"Entity {entity} has position {pos.x},{pos.y}")
+      if component_name==Position:
+        self.position_to_entity[(pos.x,pos.y)].remove(entity)
+      
+      component_data.pop(entity,None)
 
   def find_nearest_entity(self,entity,type):
     entity_position=self.get_component(entity,Position)
     nearest_entity=None
     nearest_distance=float('inf')
-    for Entity in self.get_entity_with(Inventory):
+    nearest_entity_list=self.get_component(entity,Vision).nearest_entities
+    for Entity in nearest_entity_list :
       items=self.get_component(Entity,Inventory).items.get(type,0)
       if items>0 and self.get_component(Entity,Type).type!="Human":
         nearest_entity_position=self.get_component(Entity,Position)
@@ -123,8 +140,11 @@ class World:
         if distance<nearest_distance:
           nearest_distance=distance
           nearest_entity=Entity
-    # logger.info(f"Nearest entity is {nearest_entity}")
+    logger.info(f"Nearest entity is {nearest_entity}")
     return nearest_entity
+
+  def get_entity_at(self, x, y):
+    return self.position_to_entity.get((x, y), [])
   
       
 

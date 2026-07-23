@@ -18,12 +18,20 @@ class GrowthSystem():
          # logger.info(f"Entity {entity} has age {age}")
          death_age=growth.death_age
          if age>=death_age:
-            logger.info(f"Entity {entity} has died at age {age}")
+            # logger.info(f"Entity {entity} has died at age {age}")
             # position=self.world.get_component(entity,Position)
             # x_rand=random.randint(-1,1)
             # y_rand=random.randint(-1,1)
             # position=(position.x+x_rand,position.y+y_rand)
             type=self.world.get_component(entity,Type).type
+           
+            next_phase=ENTITIES[type].get("next_phase",None)
+            if next_phase:
+               self.spawner.spawn_entity(next_phase,(self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y))
+               self.world.destroy_entity(entity)
+               continue
+            
+            
             self.add_respawn(type,(self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y))
             self.world.destroy_entity(entity)
             # Spawn the tree trunk or similiar effect here
@@ -34,18 +42,18 @@ class GrowthSystem():
             growth.update()
       for respawn in self.respawn_queue:
          if self.world.tick>=respawn["respawn_time"]:
-            logger.info(f"Entity {respawn['type']} is respawning at {respawn['pos']}")
+            # logger.info(f"Entity {respawn['type']} is respawning at {respawn['pos']}")
             self.spawner.spawn_entity(respawn["type"],respawn["pos"])
             self.respawn_queue.remove(respawn)
    
    
    
    def add_respawn(self,type,pos):
-      respawn_interval=random.randint(*ENTITIES[type]["respawn_interval"])
+      respawn_interval=random.randint(*ENTITIES[type].get("respawn_interval",None))
       self.respawn_queue.append({
          "type":type,
          "pos":pos,
          "respawn_time":self.world.tick+respawn_interval
       })
-      logger.info(f"Entity {type} will respawn at {pos} in {respawn_interval} ticks and tick is {self.world.tick+respawn_interval}")
+      # logger.info(f"Entity {type} will respawn at {pos} in {respawn_interval} ticks and tick is {self.world.tick+respawn_interval}")
       

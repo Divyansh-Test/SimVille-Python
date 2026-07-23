@@ -39,7 +39,6 @@ def try_build_house(entity, world, spawner):
     if not site_id:
         logger.info(f"Entity {entity} is laying down a new Construction Site blueprint.")
         site_id = spawner.spawn_entity("Construction Site", blueprint="House")
-
         if not site_id:
             logger.error("Spawner failed to return a valid ID for Construction Site.")
             return None
@@ -96,7 +95,7 @@ def try_transfer_excess(entity, world, spawner):
         ]
     return None
 
-work_rules = [
+work_rules= [
     try_build_house,
     try_craft_stone_axe,
     try_transfer_excess
