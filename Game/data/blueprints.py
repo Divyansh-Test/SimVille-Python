@@ -8,12 +8,12 @@ BLUEPRINTS={
     "Time":30,
     "Size":(3,3),
   },
-  "Farm Plot":{
+  "FarmPlot":{
     "Input":{
       "Wood":2,
       "Stone":2
     },
-    "Entity":"Farm Plot",
+    "Entity":"FarmPlot",
     "Time":30,
     "Size":(1,1)
   }

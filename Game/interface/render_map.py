@@ -23,7 +23,7 @@ def render_map(world,terrain_layer,map_win):
         render_symbol=world.get_component(entity,Renderable)
         type=world.get_component(entity,Type)
         map_win.addstr(position.x+1,position.y*3+1,render_symbol.char)
-        map_win.addstr(position.x+1,position.y*3+1,str(entity))
+#        map_win.addstr(position.x+1,position.y*3+1,str(entity))
         # map_win.addstr(16,1,str(f"State is {world.get_component(entity,State).state}"))
 
     

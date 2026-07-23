@@ -80,12 +80,18 @@ class World:
      return component
 
 
-  def add_component(self,entity,*args):
-    for component in args:
-      component_type=type(component)
-      if component_type == Position:
-        self.position_to_entity[(component.x,component.y)]=[entity]
-      self.components[component_type][entity]=component
+  def add_component(self, entity, *args):
+     for component in args:
+         component_type = type(component)
+            
+         if component_type == Position:
+             key = (component.x, component.y)
+                # setdefault guarantees a list exists, then appends the entity to it.
+                # Notice there is no "=" assignment here.
+             if entity not in self.position_to_entity.get(key, []):
+                 self.position_to_entity.setdefault(key, []).append(entity)
+            
+         self.components[component_type][entity] = component
 
 
   def has_component(self,entity,component_type):
@@ -119,8 +125,9 @@ class World:
   def destroy_entity(self,entity):
     pos=self.get_component(entity,Position)
     
+    
+    logger.info(f"Entity {entity} is de")
     for component_name,component_data in self.components.items():
-      logger.info(f"Entity {entity} has position {pos.x},{pos.y}")
       if component_name==Position:
         self.position_to_entity[(pos.x,pos.y)].remove(entity)
       

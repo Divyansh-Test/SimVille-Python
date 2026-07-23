@@ -31,6 +31,7 @@ class JobSystem:
          "Craft":self.Craft,
          "Build":self.Build,
          "Explore":self.Explore,
+         "Plant":self.Plant
       }
 
    def update(self):
@@ -164,7 +165,8 @@ class JobSystem:
          self.world.remove_component(entity,MoveTo)
          self.world.remove_component(entity,Path)
          entity_stock=self.world.get_component(entity,Inventory).items.get(item,0)
-         logger.info(f'target oitems are {self.world.get_component(target_id,Inventory).items.get(item)}')
+         logger.info(f"target_ is is {target_id}")
+         logger.info(f'target oitems are {self.world.get_component(target_id,Type).type}')
          target_stock=self.world.get_component(target_id,Inventory).items.get(item,0)
          
          if  job["action"]=="put":
@@ -247,16 +249,23 @@ class JobSystem:
 
 
    def Plant(self,entity,job):
+      logger.info(f"1st line of plant")
       entity_inventory=self.world.get_component(entity,Inventory).items
       if entity_inventory.get("Seed",0)<=0:
+         logger.info(f"entity dont has seed.")
          self.world.get_component(entity,Job).job.remove(job)
          self.world.update_component(entity,State("idle"))
          return
+      logger.info(f"2st line of plant")
       target_id=job["target"]
+      logger.info(f"3st line of plant")
       target=self.world.get_component(target_id,Position)
+      logger.info(f"4st line of plant")
       target=(target.x,target.y)
       target_cord=self.move_job(entity,target)
+      logger.info(f"target_cord is {target_cord}")
       target_inventory=self.world.get_component(target_id,Inventory).items
+      logger.info(f"Reached here and target here in plant job and targetinventory is {target_inventory}")
       if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
           self.world.remove_component(entity,MoveTo)
           self.world.remove_component(entity,Path)
@@ -265,7 +274,7 @@ class JobSystem:
              self.world.update_component(entity,State("idle"))
              return
           self.world.update_component(entity,State(f"Planting Seed"))
-          self.spawnner.spawn_entity("Seedling",target_cord)
+          self.spawnner.spawn_entity("Seedling",target_cord,builder_entity=entity)
           self.world.get_component(entity,Job).job.remove(job)
              
       

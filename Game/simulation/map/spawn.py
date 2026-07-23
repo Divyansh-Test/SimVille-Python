@@ -27,7 +27,7 @@ class Spawner:
             "Chest": self.spawn_chest,
             "Construction Site": self.spawn_construction_site,
             "Shore": self.spawn_shore_resources,
-            "Farm Plot": self.spawn_farm_plot,
+            "FarmPlot": self.spawn_farm_plot,
             "Plant": self.spawn_plant,
             "Seedling": self.spawn_seedling,
         }
@@ -39,7 +39,15 @@ class Spawner:
             inventory[item] = random.randint(*value)
         return inventory
 
-    def is_tile_available(self, x, y, terrain_id=0, ignore_entity=None):
+    def _get_entity_type_string(self, entity):
+        """Safely extracts the type string from a Type component."""
+        if self.world.has_component(entity, Type):
+            type_comp = self.world.get_component(entity, Type)
+            
+            return type_comp.type
+        return None
+
+    def is_tile_available(self, x, y, terrain_id=0, ignore_entity=None, valid_parents=None):
         logger.info(f"Checking tile {x}, {y} for terrain {terrain_id}")
         width = len(self.terrain_layer)
         if width == 0:
@@ -53,23 +61,39 @@ class Spawner:
             return False
 
         # O(1) Instant spatial map check
-        if (x, y) in self.world.position_to_entity:
-            occupants = self.world.spatial_map[(x, y)]
+        
+        occupants = self.world.position_to_entity.get((x, y), []).copy()
+        
+        # Start by assuming all entities on the tile (except the builder) are blocking
+        blocking_entities = [ent for ent in occupants if ent != ignore_entity]
+        logger.info(f'occupants are {occupants} and ignoring the entity {ignore_entity}')
 
-            # Find any entity on this tile that is NOT the ignored entity
-            blocking_entities = [ent for ent in occupants if ent != ignore_entity]
+        if valid_parents:
+            parent_found = False
+            for ent in occupants:
+                ent_type = self._get_entity_type_string(ent)
+                if ent_type in valid_parents:
+                    parent_found = True
+                    logger.info("parent entity is {ent}")
+                    # The parent is expected to be here, so it does not count as a block
+                    if ent in blocking_entities:
+                        blocking_entities.remove(ent)
+                    break # We only need one valid parent
 
-            if blocking_entities:
-                logger.info(f"Tile {x}, {y} is occupied by entities {blocking_entities}")
+            if not parent_found:
+                logger.info(f"Tile {x}, {y} rejected: Missing required parent from {valid_parents}")
                 return False
+
+        if blocking_entities:
+            logger.info(f"Tile {x}, {y} is blocked by entities {blocking_entities}")
+            return False
 
         logger.info(f"Tile {x}, {y} is available")
         return True
 
-    def get_valid_spawn_tile(self, position=None, terrain_id=0, fallback_search=None, ignore_entity=None):
+    def get_valid_spawn_tile(self, position=None, terrain_id=0, fallback_search=None, ignore_entity=None, valid_parents=None):
         if position is not None:
-            logger.info(f"Position is {position}")
-            if self.is_tile_available(position[0], position[1], terrain_id, ignore_entity):
+            if self.is_tile_available(position[0], position[1], terrain_id, ignore_entity, valid_parents):
                 return position
             else:
                 logger.warning(f"Spawn aborted: Position {position} is occupied or invalid.")
@@ -129,11 +153,13 @@ class Spawner:
                         return (nx, ny)
         return None
 
+    # ------------- SPAWNERS ------------- #
+
     def spawn_tree(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES["Tree"]
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["Tree"]
             health = random.randint(*data["Health"])
             death_age = random.randint(*data["death_age"])
             inventory = self._generate_inventory(data)
@@ -146,9 +172,9 @@ class Spawner:
 
     def spawn_stone(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES["Stone"]
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["Stone"]
             health = random.randint(*data["Health"])
             inventory = self._generate_inventory(data)
 
@@ -160,9 +186,9 @@ class Spawner:
 
     def spawn_npc(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES["Human"]
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["Human"]
             health = random.randint(*data["Health"])
             hunger = random.randint(*data["Hunger"])
             death_age = random.randint(*data["death_age"])
@@ -176,9 +202,9 @@ class Spawner:
 
     def spawn_house(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES["House"]
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["House"]
             house_entity = self.world.create_entity()
             self.world.add_component(house_entity, Position(tile[0], tile[1]), Health(data["Health"]),
                                       State("idle"), Type("House"), Renderable("H"))
@@ -186,7 +212,8 @@ class Spawner:
 
     def spawn_chest(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES.get("Chest", {})
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             chest_entity = self.world.create_entity()
             self.world.add_component(chest_entity, Position(tile[0], tile[1]), Inventory({"Wood":20}), State("idle"), Type("Chest"), Renderable("⌂"))
@@ -194,45 +221,48 @@ class Spawner:
 
     def spawn_farm_plot(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
-        logger.info(f"tile is {tile} and position is {position} ")
+        data = ENTITIES.get("Farm Plot", {})
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             farm_entity = self.world.create_entity()
-            self.world.add_component(farm_entity, Position(tile[0], tile[1]), State("idle"), Type("Farm"), Renderable("F"))
+            self.world.add_component(farm_entity, Position(tile[0], tile[1]), State("idle"),Inventory({}), Type("FarmPlot"), Renderable("F"))
             return farm_entity
 
     def spawn_seedling(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES["Seedling"]
+        # Seedling MUST have valid_parents=["Farm Plot"]
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["Seedling"]
             seedling_entity = self.world.create_entity()
             death_age = random.randint(*data["death_age"])
-            self.world.add_component(seedling_entity, Position(tile[0], tile[1]), State("idle"), Type("Plant"), Renderable("p"), Growth(data["interval"], death_age))
+            self.world.add_component(seedling_entity, Position(tile[0], tile[1]), State("idle"), Type("Seedling"),  Renderable("p"), Growth(data["interval"], death_age))
             return seedling_entity
 
     def spawn_plant(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES.get("Plant", {})
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             plant_entity = self.world.create_entity()
-            self.world.add_component(plant_entity, Position(tile[0], tile[1]), State("idle"), Type("Plant"), Renderable("P"))
+            death_age = random.randint(*data["death_age"])
+            self.world.add_component(plant_entity, Position(tile[0], tile[1]), State("idle"), Type("Plant"), Renderable("P"),Growth(data["interval"], death_age))
             return plant_entity
 
     def spawn_construction_site(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, ignore_entity=builder)
+        data = ENTITIES.get("Construction Site", {})
+        tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            logger.info(f"blueprint is {kwargs.get('blueprint')}")
             construction_site_entity = self.world.create_entity()
             self.world.add_component(construction_site_entity, Position(tile[0], tile[1]), State("idle"), Type("Construction Site"), Renderable("?"), Inventory({}), Blueprint(kwargs.get("blueprint")))
             return construction_site_entity
 
     def spawn_shore_resources(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        tile = self.get_valid_spawn_tile(position, fallback_search=self.find_tile_near_water, ignore_entity=builder)
+        data = ENTITIES["ShoreResource"]
+        tile = self.get_valid_spawn_tile(position, fallback_search=self.find_tile_near_water, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
-            data = ENTITIES["ShoreResource"]
             health = random.randint(*data["Health"])
             inventory = self._generate_inventory(data)
 

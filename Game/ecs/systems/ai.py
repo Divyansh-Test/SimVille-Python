@@ -75,11 +75,13 @@ class AISystem:
 
 
     def pseudo_update(self):
-        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":50}))
+        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":5}))
         # self.world.update_component(52,Job({"type":"Gather","target":63,"priority":30}))
         # # self.world.update_component(52,Job({"type":"Explore","target":(3,8),"priority":95}))
         # self.world.update_component(52,Job({"type":"Transfer","target":51,"action":"take","item":"Wood","amount":10,"priority":95}))
-        id=self.spawner.spawn_entity("Construction Site",blueprint="Farm Plot",builder_entity=52)
+        id=self.spawner.spawn_entity("Construction Site",blueprint="FarmPlot",builder_entity=52)
         self.world.update_component(52,Job({"type":"Build","target":id,"priority":85}))
         self.world. update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Wood","amount":4,"priority":90}))
         self.world.update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Stone","amount":4,"priority":90}))
+        self.world.update_component(52,Job({"type":"Transfer","target":id+1,"action":"put","item":"Seed","amount":2,"priority":40}))
+        self.world.update_component(52,Job({"type":"Plant","target":id+1,"priority":35}))

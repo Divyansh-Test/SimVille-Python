@@ -89,8 +89,8 @@ while True:
     job.update()
     movement.update()
     render_system.update()
-    time.sleep(0.5)
-    # logger.info(f"inventory of entity 52 is {world.get_component(52,Inventory).items}")
+    time.sleep(0.2)
+    logger.info(f"inventory of entity 52 is {world.get_component(52,Inventory).items}")
     # logger.info(f"inventory of entity 51 is {world.get_component(51,Inventory).items}")
    
 

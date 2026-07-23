@@ -12,6 +12,7 @@ class GrowthSystem():
       self.respawn_queue=[]
 
    def update(self):
+        
       for entity in  self.world.get_entity_with(Growth):
          growth=self.world.get_component(entity,Growth)
          age=growth.age
@@ -26,9 +27,11 @@ class GrowthSystem():
             type=self.world.get_component(entity,Type).type
            
             next_phase=ENTITIES[type].get("next_phase",None)
+            logger.info(f"type of entity is {type} and next_phase is {next_phase}")
             if next_phase:
-               self.spawner.spawn_entity(next_phase,(self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y))
+               pos=self.world.get_component(entity,Position)
                self.world.destroy_entity(entity)
+               self.spawner.spawn_entity(next_phase,(pos.x,pos.y))
                continue
             
             
