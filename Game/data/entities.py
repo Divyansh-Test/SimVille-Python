@@ -32,7 +32,8 @@ ENTITIES={
     "Health":500
   },
   "FarmPlot":{
-    "Health":100
+    "Health":100,
+    "spawn_parent":["ConstructionSite"]
   },
   "ShoreResource":{
     "Health":(80,100),

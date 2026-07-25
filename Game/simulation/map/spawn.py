@@ -25,7 +25,7 @@ class Spawner:
             "NPC": self.spawn_npc,
             "House": self.spawn_house,
             "Chest": self.spawn_chest,
-            "Construction Site": self.spawn_construction_site,
+            "ConstructionSite": self.spawn_construction_site,
             "Shore": self.spawn_shore_resources,
             "FarmPlot": self.spawn_farm_plot,
             "Plant": self.spawn_plant,
@@ -48,7 +48,7 @@ class Spawner:
         return None
 
     def is_tile_available(self, x, y, terrain_id=0, ignore_entity=None, valid_parents=None):
-        logger.info(f"Checking tile {x}, {y} for terrain {terrain_id}")
+        logger.info(f"Checking tile {x}, {y} for terrain {terrain_id} and valid_parent are {valid_parents}")
         width = len(self.terrain_layer)
         if width == 0:
             return False
@@ -167,7 +167,7 @@ class Spawner:
             tree_entity = self.world.create_entity()
             self.world.add_component(tree_entity, Position(tile[0], tile[1]), Health(health),
                                       Inventory(inventory), State("idle"),
-                                      Type("Tree"), Renderable("♣"), Growth(data["interval"], death_age))
+                                      Type("Tree"), Renderable("tree.png"), Growth(data["interval"], death_age))
             return tree_entity
 
     def spawn_stone(self, position=None, **kwargs):
@@ -181,7 +181,7 @@ class Spawner:
             stone_entity = self.world.create_entity()
             self.world.add_component(stone_entity, Position(tile[0], tile[1]), Health(health),
                                       Inventory(inventory), State("idle"),
-                                      Type("Stone"), Renderable("◆"))
+                                      Type("Stone"), Renderable("stone.png"))
             return stone_entity
 
     def spawn_npc(self, position=None, **kwargs):
@@ -197,7 +197,7 @@ class Spawner:
             npc_entity = self.world.create_entity()
             self.world.add_component(npc_entity, Position(tile[0], tile[1]), Health(health),
                                       State("Idle"), Vision(2), Inventory(inventory),
-                                      Type("Human"), Hunger(hunger), Renderable("♂"), Growth(data["interval"], death_age))
+                                      Type("Human"), Hunger(hunger), Renderable("npc.png"), Growth(data["interval"], death_age))
             return npc_entity
 
     def spawn_house(self, position=None, **kwargs):
@@ -216,16 +216,16 @@ class Spawner:
         tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             chest_entity = self.world.create_entity()
-            self.world.add_component(chest_entity, Position(tile[0], tile[1]), Inventory({"Wood":20}), State("idle"), Type("Chest"), Renderable("⌂"))
+            self.world.add_component(chest_entity, Position(tile[0], tile[1]), Inventory({"Wood":20}), State("idle"), Type("Chest"), Renderable("chest.png"))
             return chest_entity
 
     def spawn_farm_plot(self, position=None, **kwargs):
         builder = kwargs.get("builder_entity")
-        data = ENTITIES.get("Farm Plot", {})
+        data = ENTITIES.get("FarmPlot", {})
         tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             farm_entity = self.world.create_entity()
-            self.world.add_component(farm_entity, Position(tile[0], tile[1]), State("idle"),Inventory({}), Type("FarmPlot"), Renderable("F"))
+            self.world.add_component(farm_entity, Position(tile[0], tile[1]), State("idle"),Inventory({}), Type("FarmPlot"), Renderable("farm_land.png"))
             return farm_entity
 
     def spawn_seedling(self, position=None, **kwargs):
@@ -236,7 +236,7 @@ class Spawner:
         if tile:
             seedling_entity = self.world.create_entity()
             death_age = random.randint(*data["death_age"])
-            self.world.add_component(seedling_entity, Position(tile[0], tile[1]), State("idle"), Type("Seedling"),  Renderable("p"), Growth(data["interval"], death_age))
+            self.world.add_component(seedling_entity, Position(tile[0], tile[1]), State("idle"), Type("Seedling"),  Renderable("seedling.png"), Growth(data["interval"], death_age))
             return seedling_entity
 
     def spawn_plant(self, position=None, **kwargs):
@@ -246,7 +246,7 @@ class Spawner:
         if tile:
             plant_entity = self.world.create_entity()
             death_age = random.randint(*data["death_age"])
-            self.world.add_component(plant_entity, Position(tile[0], tile[1]), State("idle"), Type("Plant"), Renderable("P"),Growth(data["interval"], death_age))
+            self.world.add_component(plant_entity, Position(tile[0], tile[1]), State("idle"), Type("Plant"), Renderable("plant.png"),Growth(data["interval"], death_age))
             return plant_entity
 
     def spawn_construction_site(self, position=None, **kwargs):
@@ -255,7 +255,7 @@ class Spawner:
         tile = self.get_valid_spawn_tile(position, ignore_entity=builder, valid_parents=data.get("spawn_parent"))
         if tile:
             construction_site_entity = self.world.create_entity()
-            self.world.add_component(construction_site_entity, Position(tile[0], tile[1]), State("idle"), Type("Construction Site"), Renderable("?"), Inventory({}), Blueprint(kwargs.get("blueprint")))
+            self.world.add_component(construction_site_entity, Position(tile[0], tile[1]), State("idle"), Type("ConstructionSite"), Renderable("error.png"), Inventory({}), Blueprint(kwargs.get("blueprint")))
             return construction_site_entity
 
     def spawn_shore_resources(self, position=None, **kwargs):
@@ -267,7 +267,7 @@ class Spawner:
             inventory = self._generate_inventory(data)
 
             shore_entity = self.world.create_entity()
-            self.world.add_component(shore_entity, Position(tile[0], tile[1]), Health(health), State("idle"), Type("ShoreResource"), Renderable("*"), Inventory(inventory))
+            self.world.add_component(shore_entity, Position(tile[0], tile[1]), Health(health), State("idle"), Type("ShoreResource"), Renderable("shore.png"), Inventory(inventory))
             return shore_entity 
 
     def spawn_entity(self, type, position=None, **kwargs):

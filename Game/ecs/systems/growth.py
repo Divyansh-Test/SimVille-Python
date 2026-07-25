@@ -31,7 +31,7 @@ class GrowthSystem():
             if next_phase:
                pos=self.world.get_component(entity,Position)
                self.world.destroy_entity(entity)
-               self.spawner.spawn_entity(next_phase,(pos.x,pos.y))
+               self.spawner.spawn_entity(next_phase,(pos.x,pos.y),builder_entity=52)
                continue
             
             

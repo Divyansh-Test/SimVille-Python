@@ -1,192 +1,100 @@
-2026-07-23 22:11:54,225 | test.py | (0, 4)
-2026-07-23 22:11:54,225 | test.py | (4, 11)
-2026-07-23 22:11:54,225 | test.py | (5, 3)
-2026-07-23 22:11:54,225 | test.py | (4, 11)
-2026-07-23 22:11:54,225 | test.py | (0, 3)
-2026-07-23 22:11:54,225 | test.py | (6, 4)
-2026-07-23 22:11:54,226 | test.py | (9, 7)
-2026-07-23 22:11:54,226 | test.py | (9, 12)
-2026-07-23 22:11:54,226 | test.py | (6, 4)
-2026-07-23 22:11:54,226 | test.py | (14, 13)
-2026-07-23 22:11:54,230 | test.py | Entity 52 has job 
-2026-07-23 22:11:54,230 | test.py | Entity 52 has job [{'type': 'Gather', 'target': 2, 'priority': 5}, {'type': 'Build', 'target': 74, 'priority': 85}, {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}, {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Stone', 'amount': 4, 'priority': 90}, {'type': 'Transfer', 'target': 75, 'action': 'put', 'item': 'Seed', 'amount': 2, 'priority': 40}, {'type': 'Plant', 'target': 75, 'priority': 35}]
-2026-07-23 22:11:54,231 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:54,231 | movement.py | prev_pos is (6, 14)
-2026-07-23 22:11:54,436 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:54,436 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:54,436 | movement.py | prev_pos is (5, 14)
-2026-07-23 22:11:54,639 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:54,639 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:54,639 | movement.py | prev_pos is (5, 13)
-2026-07-23 22:11:54,842 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:54,842 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:54,842 | movement.py | prev_pos is (5, 12)
-2026-07-23 22:11:55,045 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:55,046 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:55,046 | movement.py | prev_pos is (5, 11)
-2026-07-23 22:11:55,252 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:55,252 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:55,252 | movement.py | prev_pos is (4, 11)
-2026-07-23 22:11:55,457 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:55,457 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:55,458 | movement.py | prev_pos is (4, 10)
-2026-07-23 22:11:55,662 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:55,662 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:55,662 | movement.py | prev_pos is (3, 10)
-2026-07-23 22:11:55,866 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:55,867 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:55,867 | movement.py | prev_pos is (3, 9)
-2026-07-23 22:11:56,071 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:56,072 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:56,072 | movement.py | prev_pos is (3, 8)
-2026-07-23 22:11:56,276 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:56,276 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:56,277 | movement.py | prev_pos is (2, 8)
-2026-07-23 22:11:56,481 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:56,481 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:56,481 | movement.py | prev_pos is (2, 7)
-2026-07-23 22:11:56,685 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:56,685 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:56,685 | movement.py | prev_pos is (1, 7)
-2026-07-23 22:11:56,889 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:56,889 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:56,890 | movement.py | prev_pos is (1, 6)
-2026-07-23 22:11:57,094 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:57,094 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:57,094 | movement.py | prev_pos is (0, 6)
-2026-07-23 22:11:57,298 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:57,298 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:57,298 | movement.py | prev_pos is (0, 5)
-2026-07-23 22:11:57,503 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:57,503 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:57,504 | movement.py | prev_pos is (0, 4)
-2026-07-23 22:11:57,708 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:57,709 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:57,709 | movement.py | prev_pos is (0, 3)
-2026-07-23 22:11:57,912 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:57,912 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:57,912 | movement.py | prev_pos is (0, 2)
-2026-07-23 22:11:58,116 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:58,116 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:58,116 | movement.py | prev_pos is (0, 1)
-2026-07-23 22:11:58,320 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:58,320 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:58,320 | movement.py | prev_pos is (0, 0)
-2026-07-23 22:11:58,525 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:58,525 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:58,525 | movement.py | prev_pos is (1, 0)
-2026-07-23 22:11:58,729 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:58,730 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:58,730 | movement.py | prev_pos is (2, 0)
-2026-07-23 22:11:58,935 | test.py | inventory of entity 52 is {'Wood': 67, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:58,936 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:58,936 | job.py | target_ is is 74
-2026-07-23 22:11:58,936 | job.py | target oitems are Construction Site
-2026-07-23 22:11:59,140 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 52, 'Seed': 11}
-2026-07-23 22:11:59,140 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 74, 'action': 'put', 'item': 'Stone', 'amount': 4, 'priority': 90}
-2026-07-23 22:11:59,140 | job.py | target_ is is 74
-2026-07-23 22:11:59,141 | job.py | target oitems are Construction Site
-2026-07-23 22:11:59,349 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 11}
-2026-07-23 22:11:59,349 | job.py | Entity 52 has job {'type': 'Build', 'target': 74, 'priority': 85}
-2026-07-23 22:11:59,349 | job.py | The item is FarmPlot and  new dict is {'Wood': 4, 'Stone': 4} and items needed are {'Wood': 2, 'Stone': 2}
-2026-07-23 22:11:59,349 | job.py | Entity 52 has enough items to build
-2026-07-23 22:11:59,349 | job.py | Position of target is (3, 0)
-2026-07-23 22:11:59,350 | world.py | Entity 74 is de
-2026-07-23 22:11:59,350 | spawn.py | Checking tile 3, 0 for terrain 0
-2026-07-23 22:11:59,350 | spawn.py | occupants are [52] and ignoring the entity 52
-2026-07-23 22:11:59,350 | spawn.py | Tile 3, 0 is available
-2026-07-23 22:11:59,556 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 11}
-2026-07-23 22:11:59,556 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 75, 'action': 'put', 'item': 'Seed', 'amount': 2, 'priority': 40}
-2026-07-23 22:11:59,556 | job.py | target_ is is 75
-2026-07-23 22:11:59,557 | job.py | target oitems are FarmPlot
-2026-07-23 22:11:59,761 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:11:59,761 | job.py | Entity 52 has job {'type': 'Plant', 'target': 75, 'priority': 35}
-2026-07-23 22:11:59,761 | job.py | 1st line of plant
-2026-07-23 22:11:59,762 | job.py | 2st line of plant
-2026-07-23 22:11:59,762 | job.py | 3st line of plant
-2026-07-23 22:11:59,762 | job.py | 4st line of plant
-2026-07-23 22:11:59,762 | job.py | target_cord is (3, 0)
-2026-07-23 22:11:59,762 | job.py | Reached here and target here in plant job and targetinventory is {'Seed': 2}
-2026-07-23 22:11:59,762 | spawn.py | Checking tile 3, 0 for terrain 0
-2026-07-23 22:11:59,762 | spawn.py | occupants are [52, 75] and ignoring the entity 52
-2026-07-23 22:11:59,762 | spawn.py | parent entity is {ent}
-2026-07-23 22:11:59,763 | spawn.py | Tile 3, 0 is available
-2026-07-23 22:11:59,966 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:11:59,967 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:11:59,967 | movement.py | prev_pos is (3, 0)
-2026-07-23 22:12:00,171 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:00,171 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:00,172 | movement.py | prev_pos is (2, 0)
-2026-07-23 22:12:00,376 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:00,376 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:00,376 | movement.py | prev_pos is (2, 1)
-2026-07-23 22:12:00,581 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:00,581 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:00,582 | movement.py | prev_pos is (1, 1)
-2026-07-23 22:12:00,785 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:00,786 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:00,786 | movement.py | prev_pos is (1, 2)
-2026-07-23 22:12:00,989 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:00,990 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:00,990 | movement.py | prev_pos is (0, 2)
-2026-07-23 22:12:01,193 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:01,193 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:01,193 | movement.py | prev_pos is (0, 3)
-2026-07-23 22:12:01,396 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:01,397 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:01,397 | movement.py | prev_pos is (0, 4)
-2026-07-23 22:12:01,602 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:01,602 | growth.py | type of entity is Seedling and next_phase is Plant
-2026-07-23 22:12:01,602 | world.py | Entity 76 is de
-2026-07-23 22:12:01,602 | spawn.py | Checking tile 3, 0 for terrain 0
-2026-07-23 22:12:01,603 | spawn.py | occupants are [75] and ignoring the entity None
-2026-07-23 22:12:01,603 | spawn.py | parent entity is {ent}
-2026-07-23 22:12:01,603 | spawn.py | Tile 3, 0 is available
-2026-07-23 22:12:01,603 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:01,603 | movement.py | prev_pos is (0, 5)
-2026-07-23 22:12:01,808 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:01,808 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:01,809 | movement.py | prev_pos is (0, 6)
-2026-07-23 22:12:02,012 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:02,012 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:02,013 | movement.py | prev_pos is (0, 7)
-2026-07-23 22:12:02,218 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:02,218 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:02,219 | movement.py | prev_pos is (0, 8)
-2026-07-23 22:12:02,421 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:02,422 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:02,422 | movement.py | prev_pos is (0, 9)
-2026-07-23 22:12:02,625 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:02,626 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:02,626 | movement.py | prev_pos is (0, 10)
-2026-07-23 22:12:02,829 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:02,830 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:02,830 | movement.py | prev_pos is (1, 10)
-2026-07-23 22:12:03,034 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:03,035 | growth.py | type of entity is Plant and next_phase is None
-2026-07-23 22:12:03,035 | world.py | Entity 77 is de
-2026-07-23 22:12:03,035 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:03,239 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:03,239 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:03,443 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:03,444 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:03,647 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:03,648 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:03,852 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:03,853 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,055 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:04,056 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,259 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:04,259 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,463 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:04,463 | spawn.py | Checking tile 3, 0 for terrain 0
-2026-07-23 22:12:04,463 | spawn.py | occupants are [75] and ignoring the entity None
-2026-07-23 22:12:04,463 | spawn.py | parent entity is {ent}
-2026-07-23 22:12:04,464 | spawn.py | Tile 3, 0 is available
-2026-07-23 22:12:04,464 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,668 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:04,668 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,873 | test.py | inventory of entity 52 is {'Wood': 63, 'Stone': 48, 'Seed': 9}
-2026-07-23 22:12:04,873 | job.py | Entity 52 has job {'type': 'Gather', 'target': 2, 'priority': 5}
-2026-07-23 22:12:04,874 | world.py | Entity 2 is de
-2026-07-23 22:12:05,078 | test.py | inventory of entity 52 is {'Wood': 83, 'Stone': 48, 'Seed': 9, 'Food': 6}
+2026-07-26 00:25:47,336 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:47,336 | job.py | target is (11, 6)
+2026-07-26 00:25:47,336 | movement.py | prev_pos is (4, 13)
+2026-07-26 00:25:47,527 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:47,527 | job.py | target is (11, 6)
+2026-07-26 00:25:47,527 | movement.py | prev_pos is (4, 12)
+2026-07-26 00:25:47,727 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:47,727 | job.py | target is (11, 6)
+2026-07-26 00:25:47,728 | movement.py | prev_pos is (4, 11)
+2026-07-26 00:25:47,928 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:47,928 | job.py | target is (11, 6)
+2026-07-26 00:25:47,928 | movement.py | prev_pos is (4, 10)
+2026-07-26 00:25:48,128 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:48,128 | job.py | target is (11, 6)
+2026-07-26 00:25:48,128 | movement.py | prev_pos is (4, 9)
+2026-07-26 00:25:48,328 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:48,328 | job.py | target is (11, 6)
+2026-07-26 00:25:48,328 | movement.py | prev_pos is (4, 8)
+2026-07-26 00:25:48,528 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:48,528 | job.py | target is (11, 6)
+2026-07-26 00:25:48,528 | movement.py | prev_pos is (4, 7)
+2026-07-26 00:25:48,728 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:48,728 | job.py | target is (11, 6)
+2026-07-26 00:25:48,729 | movement.py | prev_pos is (4, 6)
+2026-07-26 00:25:48,929 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:48,929 | job.py | target is (11, 6)
+2026-07-26 00:25:48,929 | movement.py | prev_pos is (5, 6)
+2026-07-26 00:25:49,129 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:49,129 | job.py | target is (11, 6)
+2026-07-26 00:25:49,129 | movement.py | prev_pos is (6, 6)
+2026-07-26 00:25:49,329 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:49,329 | job.py | target is (11, 6)
+2026-07-26 00:25:49,329 | movement.py | prev_pos is (7, 6)
+2026-07-26 00:25:49,529 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:49,529 | job.py | target is (11, 6)
+2026-07-26 00:25:49,529 | movement.py | prev_pos is (8, 6)
+2026-07-26 00:25:49,729 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:49,729 | job.py | target is (11, 6)
+2026-07-26 00:25:49,729 | movement.py | prev_pos is (9, 6)
+2026-07-26 00:25:49,929 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:49,929 | job.py | target is (11, 6)
+2026-07-26 00:25:49,929 | movement.py | prev_pos is (10, 6)
+2026-07-26 00:25:50,129 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Wood', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:50,129 | job.py | target is (11, 6)
+2026-07-26 00:25:50,129 | job.py | target_ is is 53
+2026-07-26 00:25:50,129 | job.py | target oitems are ConstructionSite
+2026-07-26 00:25:50,330 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 53, 'action': 'put', 'item': 'Stone', 'amount': 4, 'priority': 90}
+2026-07-26 00:25:50,330 | job.py | target is (11, 6)
+2026-07-26 00:25:50,330 | job.py | target_ is is 53
+2026-07-26 00:25:50,330 | job.py | target oitems are ConstructionSite
+2026-07-26 00:25:50,530 | job.py | Entity 52 has job {'type': 'Build', 'target': 53, 'priority': 85}
+2026-07-26 00:25:50,530 | job.py | The item is FarmPlot and  new dict is {'Wood': 4, 'Stone': 4} and items needed are {'Wood': 2, 'Stone': 2}
+2026-07-26 00:25:50,530 | job.py | Entity 52 has enough items to build
+2026-07-26 00:25:50,530 | job.py | Position of target is (11, 6)
+2026-07-26 00:25:50,530 | spawn.py | Checking tile 11, 6 for terrain 0 and valid_parent are ['ConstructionSite']
+2026-07-26 00:25:50,530 | spawn.py | occupants are [53, 52] and ignoring the entity 52
+2026-07-26 00:25:50,530 | spawn.py | parent entity is {ent}
+2026-07-26 00:25:50,530 | spawn.py | Tile 11, 6 is available
+2026-07-26 00:25:50,530 | world.py | Entity 53 is de
+2026-07-26 00:25:50,730 | job.py | Entity 52 has job {'type': 'Transfer', 'target': 54, 'action': 'put', 'item': 'Seed', 'amount': 2, 'priority': 40}
+2026-07-26 00:25:50,730 | job.py | target is (11, 6)
+2026-07-26 00:25:50,730 | job.py | target_ is is 54
+2026-07-26 00:25:50,730 | job.py | target oitems are FarmPlot
+2026-07-26 00:25:50,930 | job.py | Entity 52 has job {'type': 'Plant', 'target': 54, 'priority': 35}
+2026-07-26 00:25:50,930 | job.py | 1st line of plant
+2026-07-26 00:25:50,930 | job.py | 2st line of plant
+2026-07-26 00:25:50,930 | job.py | 3st line of plant
+2026-07-26 00:25:50,930 | job.py | 4st line of plant
+2026-07-26 00:25:50,930 | job.py | target is (11, 6)
+2026-07-26 00:25:50,930 | job.py | target_cord is (11, 6)
+2026-07-26 00:25:50,930 | job.py | Reached here and target here in plant job and targetinventory is {'Seed': 2}
+2026-07-26 00:25:50,930 | spawn.py | Checking tile 11, 6 for terrain 0 and valid_parent are ['FarmPlot']
+2026-07-26 00:25:50,930 | spawn.py | occupants are [52, 54] and ignoring the entity 52
+2026-07-26 00:25:50,930 | spawn.py | parent entity is {ent}
+2026-07-26 00:25:50,930 | spawn.py | Tile 11, 6 is available
+2026-07-26 00:25:53,131 | growth.py | type of entity is Seedling and next_phase is Plant
+2026-07-26 00:25:53,131 | world.py | Entity 55 is de
+2026-07-26 00:25:53,131 | spawn.py | Checking tile 11, 6 for terrain 0 and valid_parent are ['FarmPlot']
+2026-07-26 00:25:53,131 | spawn.py | occupants are [52, 54] and ignoring the entity 52
+2026-07-26 00:25:53,131 | spawn.py | parent entity is {ent}
+2026-07-26 00:25:53,131 | spawn.py | Tile 11, 6 is available
+2026-07-26 00:25:55,334 | growth.py | type of entity is Plant and next_phase is None
+2026-07-26 00:25:55,334 | world.py | Entity 56 is de
+2026-07-26 00:25:56,735 | spawn.py | Checking tile 11, 6 for terrain 0 and valid_parent are ['FarmPlot']
+2026-07-26 00:25:56,736 | spawn.py | occupants are [52, 54] and ignoring the entity None
+2026-07-26 00:25:56,738 | spawn.py | parent entity is {ent}
+2026-07-26 00:25:56,738 | spawn.py | Tile 11, 6 is blocked by entities [52]
+2026-07-26 00:25:56,738 | spawn.py | Spawn aborted: Position (11, 6) is occupied or invalid.
+2026-07-26 00:26:06,540 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,540 | world.py | Entity 1 is de
+2026-07-26 00:26:06,540 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,540 | world.py | Entity 3 is de
+2026-07-26 00:26:06,541 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,541 | world.py | Entity 5 is de
+2026-07-26 00:26:06,541 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,541 | world.py | Entity 8 is de
+2026-07-26 00:26:06,541 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,541 | world.py | Entity 22 is de
+2026-07-26 00:26:06,541 | growth.py | type of entity is Tree and next_phase is None
+2026-07-26 00:26:06,541 | world.py | Entity 26 is de

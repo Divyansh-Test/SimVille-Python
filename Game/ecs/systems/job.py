@@ -31,7 +31,8 @@ class JobSystem:
          "Craft":self.Craft,
          "Build":self.Build,
          "Explore":self.Explore,
-         "Plant":self.Plant
+         "Plant":self.Plant,
+         "PlaceBlueprint":self.PlaceBlueprint
       }
 
    def update(self):
@@ -100,7 +101,7 @@ class JobSystem:
 
    def move_job(self,entity,target):
       #This function will remove the line of code and also add path to the entity this will be only used by the jobs which needs to move somewhere.
-      # logger.info(f"target is {target}")
+      logger.info(f"target is {target}")
       
       
       # logger.info(f"target is {target}")
@@ -228,9 +229,9 @@ class JobSystem:
          pos=self.world.get_component(target,Position)
          logger.info(f"Position of target is {pos.x,pos.y}")
          self.world.get_component(entity,Job).job.remove(job)
+         self.spawnner.spawn_entity(item,(pos.x,pos.y),builder_entity=entity)
          self.world.destroy_entity(target)
          
-         self.spawnner.spawn_entity(item,(pos.x,pos.y),builder_entity=entity)
          self.world.update_component(entity,State("idle"))
 
 
@@ -249,6 +250,7 @@ class JobSystem:
 
 
    def Plant(self,entity,job):
+      
       logger.info(f"1st line of plant")
       entity_inventory=self.world.get_component(entity,Inventory).items
       if entity_inventory.get("Seed",0)<=0:
@@ -267,8 +269,12 @@ class JobSystem:
       target_inventory=self.world.get_component(target_id,Inventory).items
       logger.info(f"Reached here and target here in plant job and targetinventory is {target_inventory}")
       if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
+          
           self.world.remove_component(entity,MoveTo)
           self.world.remove_component(entity,Path)
+#          seed_available=entity_inventory.get("Seed",0)
+#          self.world.update_component(target_id,Inventory({"Seed":1}))
+#          self.world.update_component(entity,Inventory({"Seed":seed_available-1})) This is commented bcuz later i will add fertiliser etc to the farm.
           if target_inventory.get("Seed",0)<=0:
              self.world.get_component(entity,Job).job.remove(job)
              self.world.update_component(entity,State("idle"))
@@ -276,5 +282,20 @@ class JobSystem:
           self.world.update_component(entity,State(f"Planting Seed"))
           self.spawnner.spawn_entity("Seedling",target_cord,builder_entity=entity)
           self.world.get_component(entity,Job).job.remove(job)
+
+
+
+   def PlaceBlueprint(self,entity,job):
+      logger.info(f"3st line of plant")
+      
+      target=job["target"]
+      target_cord=self.move_job(entity,target)  
+      if  (self.world.get_component(entity,Position).x,self.world.get_component(entity,Position).y)==target_cord:
+          self.world.remove_component(entity,MoveTo)
+          self.world.remove_component(entity,Path)
+          id=self.spawnner.spawn_entity("ConstructionSite",position=target_cord,blueprint=job["blueprint"],builder_entity=entity)
+          self.world.get_component(entity,Job).job.remove(job)
+          logger.info(f"Spawned entity number {id}")
+        
              
       

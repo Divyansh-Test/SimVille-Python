@@ -9,6 +9,6 @@ class  HungerSystem:
    def update(self):
       for entity in self.world.get_entity_with(Hunger):
          hunger=self.world.get_component(entity,Hunger)
-         hunger.hunger-=2
+         hunger.hunger-=3
          self.world.update_component(entity,hunger)
          #logger.info(f"Entity {entity} has hunger {self.world.get_component(entity,Hunger).hunger}")

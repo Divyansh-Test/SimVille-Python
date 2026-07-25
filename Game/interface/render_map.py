@@ -1,34 +1,41 @@
-# from symtable import Symbol
 from ecs.components.position import Position
-from ecs.components.type import Type
 from ecs.components.renderable import Renderable
-from ecs.components.state import State
-import time
+from ecs.components.type import Type
 
-symbol={
-    1:"~",
-    0:".",
+# Map your old integer terrain IDs directly to your new PNG assets
+TERRAIN_ASSETS = {
+    1: "water.png",
+    0: "grass.png",
 }
 
-def render_map(world,terrain_layer,map_win):
-    
-    map_win.clear()
-    map_win.border()
-    for x in range(len(terrain_layer)):
-        for y in range(len(terrain_layer[x])):
-            map_win.addstr(x+1,y*3+1,symbol[terrain_layer[x][y]])
+def render_map(world, terrain_layer, map_surface, assets, tile_size):
+    # 1. Render the Environment
+    # We iterate by row (Y) and column (X) to map precisely to pixels
+    for row in range(len(terrain_layer)):
+        for col in range(len(terrain_layer[row])):
+            terrain_val = terrain_layer[row][col]
 
-    for entity in world.get_entity_with(Position,Type):
-        position=world.get_component(entity,Position)
-        render_symbol=world.get_component(entity,Renderable)
-        type=world.get_component(entity,Type)
-        map_win.addstr(position.x+1,position.y*3+1,render_symbol.char)
-#        map_win.addstr(position.x+1,position.y*3+1,str(entity))
-        # map_win.addstr(16,1,str(f"State is {world.get_component(entity,State).state}"))
+            # Default to "error.png" if an unknown terrain integer appears
+            image_name = TERRAIN_ASSETS.get(terrain_val, "error.png")
+            surface = assets.get_image(image_name, tile_size)
 
-    
-    
+            # Translate grid coordinates to pixel coordinates
+            pixel_x = col * tile_size
+            pixel_y = row * tile_size
 
+            map_surface.blit(surface, (pixel_x, pixel_y))
 
-
-    map_win.refresh()
+    # 2. Render the Entities
+    # We query for Position and Renderable, not Type. Type does not draw anything.
+    for entity in world.get_entity_with(Position, Renderable):
+        position = world.get_component(entity, Position)
+        render_comp = world.get_component(entity, Renderable)
+        
+        image_name = render_comp.image_file 
+        surface = assets.get_image(image_name, tile_size)
+        
+        # SWAPPED: position.y (column) becomes pixel_x, position.x (row) becomes pixel_y
+        pixel_x = position.y * tile_size
+        pixel_y = position.x * tile_size
+        
+        map_surface.blit(surface, (pixel_x, pixel_y))

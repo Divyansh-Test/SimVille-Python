@@ -20,15 +20,17 @@ class AISystem:
         ]
 
     def update(self):
-        # Fetch entities. If this returns empty, the loop never runs.
         entities_with_hunger = self.world.get_entity_with(Hunger)
         logger.info(f"Entities with Hunger: {entities_with_hunger}")
 
         for entity in entities_with_hunger:
-            # Skip decision making if they are already working on a valid job
             logger.debug(f"Evaluating entity {entity}...")
+            
             if self.world.has_component(entity, Job):
-                logger.info(f"Entity {entity} already has an active Job {self.world.get_component(entity,Job).job}. Skipping.")
+                job_comp = self.world.get_component(entity, Job)
+                # Safely get job details depending on your Job class structure
+                active_job = getattr(job_comp, 'job', getattr(job_comp, 'type', 'Unknown'))
+                logger.info(f"Entity {entity} already has an active Job {active_job}. Skipping.")
                 continue
 
             logger.info(f"Entity {entity} is idle. Evaluating new jobs...")
@@ -45,19 +47,18 @@ class AISystem:
         logger.info(f"Entity {entity} hunger level: {hunger_comp.hunger}. Starving status: {is_starving}")
 
         for category, rules in self.priority_rule_sets:
-            # Prevent entities from working if they are starving
             if category == "Productivity" and is_starving:
                 logger.warning(f"Entity {entity} is starving. Skipping Productivity rules.")
                 continue 
 
             for rule in rules:
                 logger.info(f"Entity {entity} evaluating rule: {rule.__name__}")
-                jobs = rule(entity, self.world,self.spawner)
+                jobs = rule(entity, self.world, self.spawner)
 
                 if jobs:
                     logger.info(f"Entity {entity} selected jobs from {rule.__name__}: {jobs}")
                     self.apply_job_stack(entity, jobs)
-                    return # Exit out completely once a job path is locked in
+                    return 
 
         logger.debug(f"Entity {entity} found no valid jobs to execute. Remaining idle.")
 
@@ -73,15 +74,11 @@ class AISystem:
                 logger.info(f"Entity {entity} assigning base Job: {job_data.get('type')}")
                 self.world.add_component(entity, new_job)
 
-
     def pseudo_update(self):
-        self.world.add_component(52,Job({"type":"Gather","target":2,"priority":5}))
-        # self.world.update_component(52,Job({"type":"Gather","target":63,"priority":30}))
-        # # self.world.update_component(52,Job({"type":"Explore","target":(3,8),"priority":95}))
-        # self.world.update_component(52,Job({"type":"Transfer","target":51,"action":"take","item":"Wood","amount":10,"priority":95}))
-        id=self.spawner.spawn_entity("Construction Site",blueprint="FarmPlot",builder_entity=52)
-        self.world.update_component(52,Job({"type":"Build","target":id,"priority":85}))
-        self.world. update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Wood","amount":4,"priority":90}))
-        self.world.update_component(52,Job({"type":"Transfer","target":id,"action":"put","item":"Stone","amount":4,"priority":90}))
-        self.world.update_component(52,Job({"type":"Transfer","target":id+1,"action":"put","item":"Seed","amount":2,"priority":40}))
-        self.world.update_component(52,Job({"type":"Plant","target":id+1,"priority":35}))
+#        self.world.add_component(52, Job({"type": "Gather", "target": 2, "priority": 95}))
+        id = self.spawner.spawn_entity("ConstructionSite", blueprint="FarmPlot", builder_entity=52)
+        self.world.update_component(52, Job({"type": "Build", "target": id, "priority": 85}))
+        self.world.update_component(52, Job({"type": "Transfer", "target": id, "action": "put", "item": "Wood", "amount": 4, "priority": 90}))
+        self.world.update_component(52, Job({"type": "Transfer", "target": id, "action": "put", "item": "Stone", "amount": 4, "priority": 90}))
+        self.world.update_component(52, Job({"type": "Transfer", "target": id + 1, "action": "put", "item": "Seed", "amount": 2, "priority": 40}))
+        self.world.update_component(52, Job({"type": "Plant", "target": id + 1, "priority": 35}))
