@@ -142,6 +142,7 @@ class World:
       items=self.get_component(Entity,Inventory).items.get(type,0)
       if items>0 and self.get_component(Entity,Type).type!="Human":
         nearest_entity_position=self.get_component(Entity,Position)
+        
         distance=abs(nearest_entity_position.x-entity_position.x)+abs(nearest_entity_position.y-entity_position.y)
         # logger.info(f"Distance between entity {entity} and {Entity} is {distance}")
         if distance<nearest_distance:
@@ -152,6 +153,15 @@ class World:
 
   def get_entity_at(self, x, y):
     return self.position_to_entity.get((x, y), [])
+
+
+  def entity_exists(self,entity):
+    exist=self.get_component(entity,Position)
+    if exist:
+        return True
+    return False
+        
+    
   
       
 

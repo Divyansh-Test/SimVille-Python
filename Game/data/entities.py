@@ -7,7 +7,8 @@ ENTITIES={
     },
     "interval":4,
     "death_age":(25,30),
-    "respawn_interval":(30,50)
+    "respawn_interval":(30,50),
+    "size":(1,2)
   },
   "Stone":{
     "Health":(80,100),
@@ -15,7 +16,8 @@ ENTITIES={
       "Stone":(15,30),
       "Flint":(1,8),
     },
-    "respawn_interval":(30,50)
+    "respawn_interval":(30,50),
+    "size":(1,1)
   },
   "Human":{
      "Health":(80,100),
@@ -26,14 +28,16 @@ ENTITIES={
        "Seed":(10,20)
      },
      "interval":8,
-     "death_age":(80,100)
+     "death_age":(80,100),
+     "size":(1,1)
   },
   "House":{
     "Health":500
   },
   "FarmPlot":{
     "Health":100,
-    "spawn_parent":["ConstructionSite"]
+    "spawn_parent":["ConstructionSite"],
+    "size":(1,1)
   },
   "ShoreResource":{
     "Health":(80,100),
@@ -41,6 +45,7 @@ ENTITIES={
       "Water":(10,20),
     },
     "respawn_interval":(10,20),
+    "size":(1,1)
   },
   "Seedling":{
     "Health":(10,20),
@@ -51,6 +56,7 @@ ENTITIES={
     "death_age":(5,10),
     "next_phase":"Plant",
     "spawn_parent":["FarmPlot"],
+    "size":(1,1)
   },
   "Plant":{
     "Health":(40,50),
@@ -62,7 +68,8 @@ ENTITIES={
     "death_age":(5,10), # change the not needed parametees for this like respawn_interval or other items.
 
     "spawn_parent":["FarmPlot"],
-    "respawn_interval":(5,9)
+    "respawn_interval":(5,9),
+    "size":(1,1)
     
   }
 }

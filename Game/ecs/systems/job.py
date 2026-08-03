@@ -77,6 +77,9 @@ class JobSystem:
       # I think ki ye moveTo bekar hai Research karo
       target_id=job["target"]
       target=self.world.get_component(target_id,Position)
+      if not target:
+          self.world.get_component(entity,Job).job.remove(job)
+          return
       target=(target.x,target.y)
       target_cord=self.move_job(entity,target)
       type=self.world.get_component(target_id,Type).type # instead we can take type from job as shore_res is the type but need water.
@@ -158,6 +161,9 @@ class JobSystem:
       item,amount=job["item"],job["amount"]
       target_id=job["target"]
       target=self.world.get_component(target_id,Position)
+      if not target:
+          self.world.get_component(entity,Job).job.remove(job)
+          return
       target=(target.x,target.y)
       target_cord=self.move_job(entity,target)
       direction = "from" if job["action"] == "take" else "into"
@@ -262,6 +268,9 @@ class JobSystem:
       target_id=job["target"]
       logger.info(f"3st line of plant")
       target=self.world.get_component(target_id,Position)
+      if not target:
+          self.world.get_component(entity,Job).job.remove(job)
+          return
       logger.info(f"4st line of plant")
       target=(target.x,target.y)
       target_cord=self.move_job(entity,target)

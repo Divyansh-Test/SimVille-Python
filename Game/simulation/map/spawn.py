@@ -167,7 +167,7 @@ class Spawner:
             tree_entity = self.world.create_entity()
             self.world.add_component(tree_entity, Position(tile[0], tile[1]), Health(health),
                                       Inventory(inventory), State("idle"),
-                                      Type("Tree"), Renderable("tree.png"), Growth(data["interval"], death_age))
+                                      Type("Tree"), Renderable("tree.png",data["size"][0],data["size"][1]), Growth(data["interval"], death_age))
             return tree_entity
 
     def spawn_stone(self, position=None, **kwargs):
@@ -197,7 +197,7 @@ class Spawner:
             npc_entity = self.world.create_entity()
             self.world.add_component(npc_entity, Position(tile[0], tile[1]), Health(health),
                                       State("Idle"), Vision(2), Inventory(inventory),
-                                      Type("Human"), Hunger(hunger), Renderable("npc.png"), Growth(data["interval"], death_age))
+                                      Type("Human"), Hunger(hunger), Renderable("npc.png",data["size"][0],data["size"][1]), Growth(data["interval"], death_age))
             return npc_entity
 
     def spawn_house(self, position=None, **kwargs):

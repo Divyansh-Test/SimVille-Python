@@ -6,13 +6,13 @@ from logger_config import get_logger
 logger = get_logger(__name__)
 
 def get_empty_coordinate(world):
-    target_x = random.randint(0, 14)
-    target_y = random.randint(0, 14)
+    target_x = random.randint(0, world.height-1)
+    target_y = random.randint(0, world.width-1)
     
     # Explicitly check is not None to avoid ID 0 bugs
     while world.get_entity_at(target_x, target_y) :
-        target_x = random.randint(0, 14)
-        target_y = random.randint(0, 14)
+        target_x = random.randint(0, world.height-1)
+        target_y = random.randint(0, world.width-1)
         
     return (target_x, target_y)
 
@@ -127,8 +127,8 @@ def try_explore(entity, world, spawner):
 
 # FIXED: The order of rules is now strictly aligned with your priority comments
 work_rules = [
-    try_build_house,      # Highest Priority: Finish any active construction sites
-    try_plant_crops,      # Second Priority: Secure renewable food source
-    try_transfer_excess,  # Third Priority: Clean up inventory
+#    try_build_house,      # Highest Priority: Finish any active construction sites
+#    try_plant_crops,      # Second Priority: Secure renewable food source
+#    try_transfer_excess,  # Third Priority: Clean up inventory
     try_explore           # Absolute Last: Only run if literally nothing else is possible
 ]

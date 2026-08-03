@@ -7,13 +7,13 @@ logger = get_logger(__name__)
 
 def get_empty_coordinate(world):
     # Map is 15x15, so valid indices are 0 to 14
-    target_x = random.randint(0, 14)
-    target_y = random.randint(0, 14)
+    target_x = random.randint(0, world.height-1)
+    target_y = random.randint(0, world.width-1)
     
     # Keep rolling until get_entity_at returns nothing (None or empty list)
     while world.get_entity_at(target_x, target_y):
-        target_x = random.randint(0, 14)
-        target_y = random.randint(0, 14)
+        target_x = random.randint(0, world.height-1)
+        target_y = random.randint(0, world.width-1)
         
     return (target_x, target_y)
 

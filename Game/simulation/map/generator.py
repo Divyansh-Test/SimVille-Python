@@ -17,7 +17,7 @@ def generate_terrain(height,width):
 #      [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0],
 #      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 #  ], dtype=np.uint8)
-  terrain_layer=np.zeros((15,15),dtype=np.uint8)
+  terrain_layer=np.zeros((height,width),dtype=np.uint8)
 
 
 
