@@ -5,7 +5,7 @@ TILE_SIZE = 32
 MAP_WIDTH_TILES = 40
 MAP_HEIGHT_TILES = 40
 
-# Window & UI Layout Dimensions of screen
+# Window & UI Layout Dimensions of Screen
 WINDOW_WIDTH =1500
 WINDOW_HEIGHT = 900
 UI_WIDTH_PIXELS = 550
