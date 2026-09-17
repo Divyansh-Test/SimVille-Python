@@ -4,6 +4,8 @@ import os
 from interface.render_map import render_map
 from interface.render_ui import render_ui
 from config import VIEWPORT_WIDTH, TOP_UI_HEIGHT
+from logger_config import get_logger
+logger = get_logger(__name__)
 
 class AssetManager:
     def __init__(self):
@@ -18,6 +20,7 @@ class AssetManager:
                 self.cache[cache_key] = pygame.transform.scale(img, (target_width, target_height))
             except FileNotFoundError:
                 surf = pygame.Surface((target_width, target_height))
+                logger.info(f"File not found at the path: {path}")
                 surf.fill((255, 0, 255)) 
                 self.cache[cache_key] = surf
         return self.cache[cache_key]

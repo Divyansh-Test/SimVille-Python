@@ -32,7 +32,7 @@ class MovementSystem:
             
             # 2. Safe Spatial Map Removal and Cleanup
             if prev_pos in self.world.position_to_entity:
-                logger.info(f"prev_pos is {prev_pos}")
+                # logger.info(f"prev_pos is {prev_pos}")
                 if entity in self.world.position_to_entity[prev_pos]:
                     self.world.position_to_entity[prev_pos].remove(entity)
                 

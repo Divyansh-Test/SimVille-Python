@@ -12,6 +12,9 @@ from ecs.components.blueprint import Blueprint
 from ecs.components.thrist import Thrist
 from ecs.components.growth import Growth
 from ecs.components.vision import Vision
+from ecs.components.attack_power import AttackPower
+from ecs.components.attack_range import AttackRange
+from ecs.components.stamina import Stamina
 from logger_config import get_logger
 logger=get_logger(__name__)
 
@@ -38,6 +41,9 @@ class World:
       
       Growth:{},
       Thrist:{},
+      AttackPower:{},
+      AttackRange:{},
+      Stamina:{},
     }
     
   def create_entity(self):
@@ -48,6 +54,7 @@ class World:
     for comp in component:
       
       component_type=type(comp)
+      
       if component_type not in self.components:
         raise ValueError(f"Component type {component_type} not found in world")
 
@@ -87,7 +94,6 @@ class World:
          if component_type == Position:
              key = (component.x, component.y)
                 # setdefault guarantees a list exists, then appends the entity to it.
-                # Notice there is no "=" assignment here.
              if entity not in self.position_to_entity.get(key, []):
                  self.position_to_entity.setdefault(key, []).append(entity)
             
@@ -126,7 +132,7 @@ class World:
     pos=self.get_component(entity,Position)
     
     
-    logger.info(f"Entity {entity} is de")
+    logger.info(f"Entity {entity} is destroyed")
     for component_name,component_data in self.components.items():
       if component_name==Position:
         self.position_to_entity[(pos.x,pos.y)].remove(entity)

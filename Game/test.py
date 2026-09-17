@@ -8,6 +8,7 @@ from ecs.systems.movement import MovementSystem
 from simulation.map.map import Map
 from simulation.map.spawn import Spawner
 from ecs.components.position import Position
+from ecs.components.type import Type
 from interface.render_system import RenderSystem
 from interface.camera import Camera
 from ecs.systems.job import JobSystem
@@ -15,6 +16,7 @@ from ecs.systems.ai import AISystem
 from ecs.systems.hunger import HungerSystem
 from ecs.systems.growth import GrowthSystem
 from ecs.systems.vision import VisionSystem
+from ecs.systems.perception import PerceptionSystem
 from logger_config import get_logger
 
 # ==========================================
@@ -22,12 +24,13 @@ from logger_config import get_logger
 # ==========================================
 world = World(MAP_WIDTH_TILES, MAP_HEIGHT_TILES)
 map = Map(MAP_WIDTH_TILES, MAP_HEIGHT_TILES)
+perception=PerceptionSystem(world)
 movement = MovementSystem(world)
 spawn = Spawner(world, map.terrain_layer)
 growth = GrowthSystem(world, spawn)
 vision = VisionSystem(world)
 job = JobSystem(world, map, spawn, growth)
-ai = AISystem(world, map, spawn)
+ai = AISystem(world, map, spawn,perception)
 hunger = HungerSystem(world)
 
 logger = get_logger(__name__)
@@ -49,10 +52,10 @@ terrain_layer = map.terrain_layer
 render_system = RenderSystem(world, terrain_layer, screen, map_surface, TILE_SIZE, camera)
 
 # Spawning Entities
+for _ in range(4): spawn.spawn_entity("NPC")
 for _ in range(100): spawn.spawn_entity("Tree")
 for _ in range(20): spawn.spawn_entity("Stone")
 for _ in range(1): spawn.spawn_entity("Chest")
-for _ in range(4): spawn.spawn_entity("NPC")
 for _ in range(21): spawn.spawn_entity("Shore")
 
 #ai.pseudo_update()
@@ -98,16 +101,16 @@ def handle_events(state, render_system, camera, world):
             # F-Key Debug Overlays
             elif event.key == pygame.K_F1:
                 state["show_vision"] = not state["show_vision"]
-                logger.info(f"Vision Overlay: {state['show_vision']}")
+                #logger.info(f"Vision Overlay: {state['show_vision']}")
             elif event.key == pygame.K_F2:
                 state["show_path"] = not state["show_path"]
-                logger.info(f"Path Overlay: {state['show_path']}")
+                #logger.info(f"Path Overlay: {state['show_path']}")
             elif event.key == pygame.K_F3:
                 state["show_target"] = not state["show_target"]
-                logger.info(f"Target Line Overlay: {state['show_target']}")
+                #logger.info(f"Target Line Overlay: {state['show_target']}")
             elif event.key == pygame.K_F4:
                 state["show_jobs"] = not state["show_jobs"]
-                logger.info(f"Job Popups: {state['show_jobs']}")
+                #logger.info(f"Job Popups: {state['show_jobs']}")
                 
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mx, my = pygame.mouse.get_pos()
@@ -160,7 +163,8 @@ def handle_camera(state, camera):
         target_pixel_y = (pos.x * TILE_SIZE) + (TILE_SIZE // 2)
         camera.update_target(target_pixel_x, target_pixel_y)
 
-
+vision.update()
+ai.pseudo_update()
 def update_simulation_systems(state, world, growth, vision, hunger, job, movement):
     should_update = False
     iterations = 1
@@ -179,7 +183,7 @@ def update_simulation_systems(state, world, growth, vision, hunger, job, movemen
 #            growth.update()
             vision.update()
             hunger.update()
-            ai.update()
+            # ai.update()
             job.update()
             movement.update()
 
